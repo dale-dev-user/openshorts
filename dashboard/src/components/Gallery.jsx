@@ -23,7 +23,7 @@ export default function Gallery() {
             const res = await fetch(
                 getApiUrl(`/api/gallery/clips?limit=${CLIPS_PER_PAGE}&offset=${currentOffset}`)
             );
-            if (!res.ok) throw new Error('Failed to fetch clips');
+            if (!res.ok) throw new Error('クリップの取得に失敗しました');
             const data = await res.json();
 
             const newClips = data.clips || [];
@@ -44,12 +44,12 @@ export default function Gallery() {
         }
     }, []);
 
-    // Initial load
+    // 初回ロード
     useEffect(() => {
         fetchClips(0, false);
     }, [fetchClips]);
 
-    // Infinite scroll observer
+    // 無限スクロール用オブザーバ
     useEffect(() => {
         if (!hasMore || loadingMore || loading) return;
 
@@ -77,7 +77,7 @@ export default function Gallery() {
         return (
             <div className="h-full flex flex-col items-center justify-center text-zinc-500 animate-[fadeIn_0.5s_ease-out]">
                 <Loader2 size={32} className="animate-spin mb-4 text-primary" />
-                <p>Loading your viral history...</p>
+                <p>過去のクリップを読み込み中...</p>
             </div>
         );
     }
@@ -86,7 +86,7 @@ export default function Gallery() {
         return (
             <div className="h-full flex flex-col items-center justify-center text-red-400 p-6">
                 <AlertCircle size={32} className="mb-4" />
-                <p>Error loading gallery: {error}</p>
+                <p>ギャラリー読み込みエラー: {error}</p>
                 <button
                     onClick={() => {
                         setError(null);
@@ -95,7 +95,7 @@ export default function Gallery() {
                     }}
                     className="mt-4 px-4 py-2 bg-white/5 hover:bg-white/10 rounded-lg text-sm text-white transition-colors"
                 >
-                    Retry
+                    再試行
                 </button>
             </div>
         );
@@ -105,17 +105,17 @@ export default function Gallery() {
         <div className="h-full overflow-y-auto p-6 md:p-8 animate-[fadeIn_0.3s_ease-out]">
             <div className="flex items-center justify-between mb-8">
                 <h1 className="text-2xl font-bold flex items-center gap-3">
-                    <LayoutGrid className="text-primary" /> Clip Gallery
+                    <LayoutGrid className="text-primary" /> クリップギャラリー
                 </h1>
                 <span className="text-xs bg-white/10 text-white px-3 py-1 rounded-full border border-white/5">
-                    {clips.length} {clips.length === 1 ? 'Clip' : 'Clips'}{hasMore ? '+' : ''}
+                    {clips.length} クリップ{hasMore ? '+' : ''}
                 </span>
             </div>
 
             {clips.length === 0 ? (
                 <div className="text-center py-20 text-zinc-500">
-                    <p className="text-lg mb-2">No clips found yet.</p>
-                    <p className="text-sm">Process some videos to populate your gallery!</p>
+                    <p className="text-lg mb-2">クリップはまだありません。</p>
+                    <p className="text-sm">動画を処理してギャラリーを埋めましょう。</p>
                 </div>
             ) : (
                 <>
@@ -125,7 +125,7 @@ export default function Gallery() {
                         ))}
                     </div>
 
-                    {/* Infinite scroll loader trigger */}
+                    {/* 無限スクロールのトリガ要素 */}
                     {hasMore && (
                         <div
                             ref={loaderRef}
@@ -134,7 +134,7 @@ export default function Gallery() {
                             {loadingMore && (
                                 <div className="flex items-center gap-2 text-zinc-500">
                                     <Loader2 size={20} className="animate-spin" />
-                                    <span className="text-sm">Loading more clips...</span>
+                                    <span className="text-sm">クリップを追加で読み込み中...</span>
                                 </div>
                             )}
                         </div>

@@ -3,16 +3,16 @@ import { Player } from '@remotion/player';
 import { ShortVideo } from '../remotion/compositions/ShortVideo';
 
 /**
- * Wraps Remotion's Player component for real-time preview in modals.
- * Accepts the same ShortVideoProps interface as the Remotion composition.
+ * モーダル内のリアルタイムプレビュー用に Remotion の Player をラップ。
+ * Remotion コンポジションと同じ ShortVideoProps を受け取る。
  *
  * @param {object} props
- * @param {string} props.videoUrl - URL to the base clip video
- * @param {number} props.durationInSeconds - Video duration in seconds
- * @param {object|null} props.subtitles - SubtitleConfig or null
- * @param {object|null} props.hook - HookConfig or null
- * @param {object|null} props.effects - EffectsConfig or null
- * @param {string} [props.className] - Additional CSS classes
+ * @param {string} props.videoUrl - ベースクリップの動画 URL
+ * @param {number} props.durationInSeconds - 動画の長さ（秒）
+ * @param {object|null} props.subtitles - SubtitleConfig もしくは null
+ * @param {object|null} props.hook - HookConfig もしくは null
+ * @param {object|null} props.effects - EffectsConfig もしくは null
+ * @param {string} [props.className] - 追加 CSS クラス
  */
 export default function RemotionPreview({
     videoUrl,

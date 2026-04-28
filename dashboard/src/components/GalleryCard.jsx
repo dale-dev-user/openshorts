@@ -8,14 +8,14 @@ export default function GalleryCard({ clip }) {
     const cardRef = useRef(null);
     const videoRef = useRef(null);
 
-    // Lazy loading with IntersectionObserver
+    // IntersectionObserver で遅延ロード
     useEffect(() => {
         const observer = new IntersectionObserver(
             (entries) => {
                 entries.forEach((entry) => {
                     if (entry.isIntersecting) {
                         setIsVisible(true);
-                        // Once loaded, we don't need to observe anymore
+                        // 一度読み込んだら監視解除
                         observer.unobserve(entry.target);
                     }
                 });

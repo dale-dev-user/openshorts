@@ -2,18 +2,18 @@ import { renderMediaOnWeb } from '@remotion/web-renderer';
 import { ShortVideo } from '../remotion/compositions/ShortVideo';
 
 /**
- * Renders a Remotion composition directly in the browser using WebCodecs.
- * Returns a blob URL to the rendered MP4.
+ * WebCodecs を用いてブラウザ上で Remotion コンポジションを直接レンダリング。
+ * 生成された MP4 の Blob URL を返す。
  *
  * @param {object} params
- * @param {string} params.videoUrl - Source video URL
- * @param {number} params.durationInSeconds - Video duration
+ * @param {string} params.videoUrl - ソース動画 URL
+ * @param {number} params.durationInSeconds - 動画の長さ
  * @param {object|null} params.subtitles - SubtitleConfig
  * @param {object|null} params.hook - HookConfig
  * @param {object|null} params.effects - EffectsConfig
- * @param {function} [params.onProgress] - Progress callback (0-1)
- * @param {AbortSignal} [params.signal] - Abort signal for cancellation
- * @returns {Promise<string>} Blob URL of the rendered MP4
+ * @param {function} [params.onProgress] - 進捗コールバック (0-1)
+ * @param {AbortSignal} [params.signal] - キャンセル用 AbortSignal
+ * @returns {Promise<string>} レンダリング済み MP4 の Blob URL
  */
 export async function renderInBrowser({
     videoUrl,
@@ -62,7 +62,7 @@ export async function renderInBrowser({
 }
 
 /**
- * Triggers a download of a blob URL as an MP4 file.
+ * Blob URL を MP4 ファイルとしてダウンロードさせる。
  */
 export function downloadBlobUrl(blobUrl, filename = 'output.mp4') {
     const link = document.createElement('a');

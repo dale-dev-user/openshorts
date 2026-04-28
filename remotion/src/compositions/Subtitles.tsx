@@ -68,14 +68,14 @@ const SubtitleBlock: React.FC<SubtitleBlockProps> = ({
   const { fps } = useVideoConfig();
   const { style, position } = config;
 
-  // Current time relative to composition start (sequence-relative frame)
+  // コンポジション先頭基準の現在時刻（Sequence の相対フレーム）
   const currentTimeMs = blockStartMs + (frame / fps) * 1000;
   const activeIndex = getActiveWordIndex(block.words, currentTimeMs);
 
   const positionStyle = POSITION_MAP[position] ?? POSITION_MAP.bottom;
   const fontStack = getFontStack(style.fontFamily);
 
-  // Background box style
+  // 背景ボックスのスタイル
   const hasBg = style.bgOpacity > 0;
   const bgStyle: React.CSSProperties = hasBg
     ? {
@@ -193,7 +193,7 @@ const WordSpan: React.FC<WordSpanProps> = ({
     }
   }
 
-  // Text stroke via textShadow (CSS paint-order not reliable in Remotion)
+  // textShadow で縁取りを再現（Remotion 上では CSS paint-order が安定しないため）
   const strokeShadow =
     style.borderWidth > 0
       ? [

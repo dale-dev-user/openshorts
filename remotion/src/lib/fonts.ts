@@ -1,8 +1,8 @@
 import { staticFile } from "remotion";
 
 /**
- * CSS @font-face declaration for NotoSerif-Bold (bundled locally).
- * Use in components via: <style>{notoSerifFontFace}</style>
+ * NotoSerif-Bold（ローカル同梱）の CSS @font-face 宣言。
+ * コンポーネントから次のように使う: <style>{notoSerifFontFace}</style>
  */
 export const NOTO_SERIF_FONT_FAMILY = "NotoSerif-Bold";
 
@@ -16,8 +16,8 @@ export const notoSerifFontFace = `
 `;
 
 /**
- * Map of subtitle font families to their CSS-safe names.
- * These match the options available in SubtitleModal.jsx.
+ * 字幕用フォントファミリと CSS で使える完全な指定の対応表。
+ * SubtitleModal.jsx で選択できるオプションと同じ。
  */
 export const SUBTITLE_FONTS: Record<string, string> = {
   Verdana: "Verdana, Geneva, sans-serif",

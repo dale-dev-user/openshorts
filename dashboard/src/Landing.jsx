@@ -61,135 +61,135 @@ export default function Landing({ onLaunchApp }) {
   const features = [
     {
       icon: Sparkles,
-      title: "AI Viral Moment Detection",
-      description: "Google Gemini 3.0 Flash analyzes your video transcript and scene boundaries to detect the 3-15 most engaging moments. Each clip is scored for viral potential based on emotional impact, hook strength, and shareability — similar to how TikTok's algorithm ranks content for the For You page."
+      title: "AI による「バズる瞬間」検出",
+      description: "Google Gemini 3.0 Flash が動画の文字起こしとシーン境界を解析し、最も惹きつける 3〜15 個の瞬間を抽出。各クリップは感情的インパクト、フックの強さ、シェアされやすさで評価され、TikTok の For You アルゴリズムに近い基準でランク付けされます。"
     },
     {
       icon: Scissors,
-      title: "Smart 9:16 Vertical Cropping",
-      description: "Dual-mode AI reframing: TRACK mode follows subjects with MediaPipe face detection + YOLOv8 fallback. GENERAL mode creates blurred backgrounds for group shots and landscapes."
+      title: "9:16 縦動画へのスマートクロップ",
+      description: "デュアルモード AI リフレーミング。TRACK モードは MediaPipe の顔検出 + YOLOv8 フォールバックで被写体を追従。GENERAL モードは集合シーンや風景向けにブラー背景レイアウトを生成します。"
     },
     {
       icon: Subtitles,
-      title: "Automatic Subtitle Generation",
-      description: "Powered by faster-whisper with word-level timestamps. According to Verizon Media research, 80% of viewers are more likely to watch a video to completion when captions are available. Subtitles are auto-generated, styled, and burned into your clips."
+      title: "字幕の自動生成",
+      description: "faster-whisper による単語単位タイムスタンプ付き文字起こし。Verizon Media の調査では字幕がある動画は最後まで視聴される確率が 80% 高くなります。スタイル付き字幕を自動生成し動画に焼き付けます。"
     },
     {
       icon: Languages,
-      title: "AI Voice Dubbing in 30+ Languages",
-      description: "ElevenLabs AI integration translates and dubs your video audio while preserving the original speaker's voice characteristics. According to CSA Research, 76% of consumers prefer content in their native language — dubbing unlocks global audiences."
+      title: "30+ 言語の AI 音声吹き替え",
+      description: "ElevenLabs AI と連携し、元話者の声質を保ったまま音声を翻訳・吹き替え。CSA Research によれば消費者の 76% は母国語のコンテンツを好むため、吹き替えはグローバル展開の鍵です。"
     },
     {
       icon: Type,
-      title: "Hook Text Overlays",
-      description: "Add attention-grabbing text overlays with styled fonts. AI-generated hook titles capture viewers in the first 3 seconds — critical for TikTok and Reels engagement."
+      title: "フック（テキストオーバーレイ）",
+      description: "目を引くスタイル付きテキストを重ねられます。AI が最初の 3 秒で視聴者を掴むフックタイトルを生成。TikTok / Reels では決定的に重要な要素です。"
     },
     {
       icon: Zap,
-      title: "AI Video Effects",
-      description: "Google Gemini generates dynamic FFmpeg filters for professional video effects — color grading, transitions, and visual enhancements applied automatically."
+      title: "AI 動画エフェクト",
+      description: "Google Gemini が動的な FFmpeg フィルタを生成。カラーグレーディングやトランジションなどプロ品質のエフェクトが自動適用されます。"
     },
     {
       icon: Upload,
-      title: "YouTube URL or Local Upload",
-      description: "Paste any YouTube URL or upload a local video file. yt-dlp handles downloads at maximum quality while preserving original resolution and audio."
+      title: "YouTube URL またはローカルアップロード",
+      description: "YouTube の URL を貼り付けるか、ローカルファイルをアップロード。yt-dlp が最大画質でダウンロードし、解像度と音声を保ちます。"
     },
     {
       icon: Shield,
-      title: "100% Self-Hosted & Private",
-      description: "Deploy with Docker on your own machine. Your videos never leave your infrastructure. API keys are encrypted client-side and never stored on the server."
+      title: "100% セルフホスト・プライベート",
+      description: "Docker で自分のマシンにデプロイ。動画は外部に出ません。API キーはクライアント側で暗号化、サーバには保存されません。"
     },
     {
       icon: Monitor,
-      title: "Free AI YouTube Studio",
-      description: "Free AI YouTube thumbnail generator, AI title suggestions (10 viral options with refinement chat), and auto-generated descriptions with chapter timestamps — all free. Upload a face photo for personalized thumbnails. Publish directly to YouTube from one workflow."
+      title: "無料 AI YouTube Studio",
+      description: "AI サムネイル生成、AI タイトル候補（10 案 + 改善チャット）、章タイムスタンプ付き説明文の自動生成すべて無料。顔写真をアップすればパーソナライズしたサムネも作れて、そのまま YouTube に公開できます。"
     },
     {
       icon: Globe,
-      title: "Direct Social Publishing",
-      description: "Post directly to TikTok, Instagram Reels, and YouTube Shorts from the dashboard. Async uploads with progress tracking and S3 cloud backup."
+      title: "SNS への直接投稿",
+      description: "ダッシュボードから TikTok / Instagram Reels / YouTube Shorts へ直接投稿。非同期アップロードと進捗トラッキング、S3 バックアップ付き。"
     },
     {
       icon: Sparkles,
-      title: "AI UGC Video Generator",
-      description: "Generate marketing videos with AI actors for any product or business. Paste a URL or describe your product — AI writes the script, generates a realistic avatar with lip-sync, adds b-roll, subtitles, and hook overlays. From $0.65/video."
+      title: "AI UGC 動画ジェネレータ",
+      description: "あらゆる商品・ビジネス向けに AI アクター付きマーケ動画を生成。URL を貼るか商品を説明するだけで、AI がスクリプトを書き、リップシンク付きアバター、Bロール、字幕、フックを付けて完成。1 本 $0.65 から。"
     },
     {
       icon: FileVideo,
-      title: "AI Actors & Lip-Sync",
-      description: "Choose from a gallery of AI-generated actors or upload your own photo. The pipeline generates a talking head video with natural movement and lip-synced voiceover in English or Spanish. Two modes: Low Cost ($0.65) and Premium ($2.00)."
+      title: "AI アクター & リップシンク",
+      description: "AI 生成アクターのギャラリーから選ぶか、自分の写真をアップロード。自然な動きとリップシンクで英語/スペイン語のトーキングヘッド動画を生成。Low Cost ($0.65) と Premium ($2.00) の 2 モード。"
     }
   ];
 
   const steps = [
-    { title: "Paste a YouTube URL or Upload a Video", description: "Drop any YouTube link or upload a local video file. OpenShorts supports all common formats and resolutions." },
-    { title: "AI Detects the Best Viral Moments", description: "Google Gemini 3.0 Flash transcribes, analyzes scene boundaries, and identifies 3-15 high-potential clips of 15-60 seconds each." },
-    { title: "Smart Cropping to Vertical 9:16", description: "AI reframes each clip to vertical format with face tracking. Subjects stay centered with stabilized camera movement — no manual positioning." },
-    { title: "Add Subtitles, Hooks & Effects", description: "Auto-generate styled subtitles, add hook text overlays, and apply AI video effects. Optionally dub into 30+ languages." },
-    { title: "Download or Post to Social Media", description: "Export your viral-ready clips or post directly to TikTok, Instagram Reels, and YouTube Shorts from the dashboard." }
+    { title: "YouTube の URL を貼るか動画をアップロード", description: "YouTube リンクをドロップするか、ローカル動画をアップロード。OpenShorts は主要なフォーマット・解像度に対応しています。" },
+    { title: "AI が最高のバズり瞬間を検出", description: "Google Gemini 3.0 Flash が文字起こしとシーン境界を解析し、15〜60 秒のポテンシャルが高いクリップを 3〜15 本抽出します。" },
+    { title: "9:16 縦動画へのスマートクロップ", description: "AI が顔追従で各クリップを縦動画化。被写体は中央に保たれ、カメラの揺れも抑えられるため手動調整は不要です。" },
+    { title: "字幕・フック・エフェクトを追加", description: "スタイル付き字幕の自動生成、フックの追加、AI エフェクトの適用。任意で 30+ 言語へ吹き替え可能。" },
+    { title: "ダウンロード or SNS へ投稿", description: "クリップを書き出すか、ダッシュボードから TikTok / Instagram Reels / YouTube Shorts へ直接投稿。" }
   ];
 
   const faqs = [
     {
-      question: "What is OpenShorts and how does it work?",
-      answer: "OpenShorts is a free, open source AI clip generator that transforms long YouTube videos or local uploads into viral-ready short clips in 9:16 vertical format. It uses a multi-step AI pipeline: faster-whisper for transcription with word-level timestamps, PySceneDetect for scene boundary detection, and Google Gemini 3.0 Flash AI for identifying the most engaging viral moments. According to HubSpot's 2025 State of Marketing report, short-form video delivers the highest ROI of any content format, and repurposing long-form content into shorts increases total reach by up to 300%."
+      question: "OpenShorts とは何ですか？どう動きますか？",
+      answer: "OpenShorts は無料・オープンソースの AI クリップジェネレータで、長尺の YouTube 動画やローカル動画を 9:16 縦動画のバズり用ショートに変換します。多段 AI パイプラインを使用：単語単位タイムスタンプの faster-whisper 文字起こし、PySceneDetect によるシーン境界検出、Google Gemini 3.0 Flash による最も惹きつける瞬間の特定。HubSpot の 2025 年 State of Marketing レポートではショート動画は最も ROI が高いコンテンツ形式で、長尺コンテンツのリパーパスでリーチが最大 300% 向上するとされています。"
     },
     {
-      question: "Is OpenShorts really free? What's the catch?",
-      answer: "OpenShorts is 100% free and open source. You self-host it using Docker on your own machine or server. It uses three external APIs — all with free tiers. Google Gemini API (required) powers the AI analysis, viral moment detection, and thumbnail generation — its free tier includes 1,500 requests per day. ElevenLabs API (optional) enables AI voice dubbing in 30+ languages — free tier included. Upload-Post API (optional) is a social media API that allows direct publishing to YouTube, TikTok, and Instagram — 10 free uploads/month, no credit card required. There are no watermarks, no usage limits, no monthly subscriptions, and no per-video fees — unlike Opus Clip ($15-228/month) or Kapwing ($24-79/month)."
+      question: "本当に無料ですか？落とし穴はありますか？",
+      answer: "OpenShorts は 100% 無料・オープンソースです。Docker を使って自分のマシンやサーバでセルフホスト。3 つの外部 API を利用しますがすべて無料枠あり。Google Gemini API（必須）が AI 解析・バズり瞬間検出・サムネイル生成を担い、無料枠は 1 日 1,500 リクエスト。ElevenLabs API（任意）は 30+ 言語の AI 吹き替え用で無料枠あり。Upload-Post API（任意）は YouTube / TikTok / Instagram への直接投稿用ソーシャル API で月 10 本まで無料、クレカ不要。透かしも使用制限もサブスクも従量課金もありません（Opus Clip は月 $15-228、Kapwing は月 $24-79）。"
     },
     {
-      question: "How does OpenShorts compare to Opus Clip?",
-      answer: "OpenShorts is a free, self-hosted alternative to Opus Clip. Both offer AI viral moment detection and smart vertical cropping. Key differences: OpenShorts is completely free vs Opus Clip's $15-228/month pricing. OpenShorts runs on your infrastructure (full data privacy) vs cloud-only. OpenShorts uses Google Gemini 3.0 Flash for AI analysis vs Opus Clip's proprietary model. OpenShorts adds AI voice dubbing in 30+ languages, AI-generated video effects, and hook text overlays. The trade-off is that OpenShorts requires Docker self-hosting, while Opus Clip is a ready-to-use cloud service."
+      question: "OpenShorts と Opus Clip の違いは？",
+      answer: "OpenShorts は Opus Clip の無料・セルフホスト版です。AI バズり瞬間検出とスマート縦クロップは両方とも備えています。主な違い：OpenShorts は完全無料、Opus Clip は月 $15-228。OpenShorts は自分のインフラ（完全プライベート）、Opus Clip はクラウドのみ。OpenShorts は Google Gemini 3.0 Flash、Opus Clip は独自モデル。OpenShorts は 30+ 言語の AI 吹き替え、AI エフェクト、フックを追加で備えます。代わりに OpenShorts は Docker のセルフホストが必要で、Opus Clip はそのまま使えるクラウドサービスです。"
     },
     {
-      question: "How do I convert a YouTube video to TikTok or Reels?",
-      answer: "Simply paste the YouTube URL into OpenShorts, enter your free Gemini API key, and click Process. The AI automatically downloads the video via yt-dlp, transcribes it with faster-whisper, detects the best viral moments using Google Gemini 3.0 Flash, and crops them to 9:16 vertical format with MediaPipe face tracking. According to Wyzowl's 2025 Video Marketing Statistics report, 91% of businesses use video as a marketing tool, and repurposed short-form clips drive 2.5x more engagement than original content."
+      question: "YouTube 動画を TikTok や Reels に変換するには？",
+      answer: "YouTube URL を OpenShorts に貼り、無料の Gemini API キーを入力して Process を押すだけ。AI が yt-dlp で動画をダウンロードし、faster-whisper で文字起こし、Google Gemini 3.0 Flash で最良の瞬間を検出、MediaPipe の顔追従で 9:16 縦動画にクロップします。Wyzowl の 2025 年動画マーケ統計では 91% の企業が動画をマーケ手段として活用し、リパーパスされたショートはオリジナルの 2.5 倍のエンゲージメントを得ています。"
     },
     {
-      question: "What AI does OpenShorts use for viral moment detection?",
-      answer: "OpenShorts uses Google Gemini 3.0 Flash, Google's latest multimodal AI model, for viral moment detection and title generation. The AI receives the full video transcript with timestamps, scene boundary data from PySceneDetect, and analyzes engagement patterns to identify the 3-15 most shareable moments. Each clip is scored based on emotional impact, hook strength, and viral potential — similar to how platforms like TikTok and YouTube rank content."
+      question: "OpenShorts はバズり瞬間検出に何の AI を使っていますか？",
+      answer: "Google の最新マルチモーダル AI、Google Gemini 3.0 Flash を使ってバズり瞬間検出とタイトル生成を行います。AI はタイムスタンプ付きの全文文字起こしと PySceneDetect のシーン境界データを受け取り、エンゲージメントパターンを解析して 3〜15 個の最もシェアされやすい瞬間を特定。各クリップは感情的インパクト、フックの強さ、バズるポテンシャルでスコアリングされます（TikTok / YouTube のランク付けと類似）。"
     },
     {
-      question: "Can OpenShorts translate and dub videos into other languages?",
-      answer: "Yes. OpenShorts integrates with ElevenLabs AI dubbing to translate your video audio into over 30 languages while preserving the original speaker's voice characteristics. After dubbing, the system automatically re-transcribes the new audio and generates subtitles in the target language. This makes it easy to repurpose content for global audiences — studies show that dubbed content receives 2-3x more engagement in non-English markets."
+      question: "他言語への翻訳・吹き替えは可能ですか？",
+      answer: "可能です。ElevenLabs AI 吹き替えと統合しており、元話者の声質を保ったまま 30+ 言語に翻訳。吹き替え後はシステムが新しい音声を再度文字起こしし、ターゲット言語の字幕も生成します。グローバル向けのリパーパスが容易になり、調査では吹き替えコンテンツは非英語圏で 2〜3 倍のエンゲージメントを得ます。"
     },
     {
-      question: "How does the smart vertical cropping work?",
-      answer: "OpenShorts offers two intelligent cropping modes for converting 16:9 horizontal video to 9:16 vertical format. TRACK mode uses MediaPipe face detection with YOLOv8 as fallback to follow a single subject with 'Heavy Tripod' stabilization — the camera moves smoothly like a professional cameraman. GENERAL mode handles group shots and landscapes by creating a blurred background layout. A SpeakerTracker prevents rapid switching between subjects and handles temporary occlusions for smooth results."
+      question: "スマート縦クロップはどう動きますか？",
+      answer: "16:9 横動画を 9:16 縦動画に変換するための 2 つのインテリジェントモードを用意。TRACK モードは MediaPipe 顔検出（YOLOv8 フォールバック）で単一被写体を追従し、「Heavy Tripod」スタビライゼーションでプロのカメラマンのように滑らかに追跡。GENERAL モードは集合シーンや風景向けにブラー背景レイアウトを生成。SpeakerTracker が被写体間の急激な切り替えを抑制し、一時的な遮蔽にも対応します。"
     },
     {
-      question: "Can OpenShorts generate YouTube thumbnails and titles for free?",
-      answer: "Yes. OpenShorts includes a free AI YouTube thumbnail generator, a free AI YouTube title generator, and a free AI YouTube description generator — all powered by Google Gemini 3.0 Flash. Upload your video and the AI suggests 10 viral title options with an interactive refinement chat. Then it generates multiple thumbnail designs using AI image generation — upload a face photo and background image for personalized results. The studio also auto-generates YouTube descriptions with chapter timestamps and lets you publish directly to YouTube. Everything is 100% free with the Gemini free tier."
+      question: "YouTube サムネとタイトルの無料生成はできますか？",
+      answer: "はい。OpenShorts は無料の AI YouTube サムネイル生成、AI YouTube タイトル生成、AI YouTube 説明文生成を内蔵（すべて Google Gemini 3.0 Flash）。動画をアップすると AI がインタラクティブな改善チャット付きで 10 個のバズりタイトル案を提示。さらに AI 画像生成で複数のサムネデザインを作成（顔写真や背景画像をアップしてパーソナライズ）。章タイムスタンプ付き説明文の自動生成、YouTube への直接公開もサポート。Gemini 無料枠ですべて 100% 無料。"
     },
     {
-      question: "What are the system requirements to run OpenShorts?",
-      answer: "OpenShorts runs on any system with Docker installed. The recommended setup is 8GB+ RAM and a modern multi-core CPU. GPU acceleration (NVIDIA CUDA) is optional but speeds up video processing significantly. The Docker Compose setup handles all dependencies automatically — Python 3.11, FFmpeg, YOLOv8, MediaPipe, faster-whisper, and the React dashboard. It works on Linux, macOS, and Windows (via WSL2/Docker Desktop)."
+      question: "システム要件は？",
+      answer: "Docker が動く環境ならどこでも。推奨は 8GB+ RAM のモダンなマルチコア CPU。GPU アクセラレーション（NVIDIA CUDA）は任意ですが動画処理が大幅に高速化。Docker Compose 構成で依存関係を自動管理（Python 3.11、FFmpeg、YOLOv8、MediaPipe、faster-whisper、React ダッシュボード）。Linux / macOS / Windows（WSL2 + Docker Desktop）で動作します。"
     },
     {
-      question: "Is there a free open source clip generator?",
-      answer: "Yes — OpenShorts is a 100% free, open source clip generator. Unlike paid clip generators like Opus Clip ($15-228/month) or Kapwing ($24-79/month), OpenShorts lets you generate unlimited clips with no watermarks, no usage limits, and no subscription fees. It also includes a free AI YouTube thumbnail generator, free AI YouTube title generator, and free AI YouTube description generator — features that other clip generators charge extra for. You self-host it with Docker on your own machine for full privacy and control."
+      question: "無料・オープンソースのクリップジェネレータはありますか？",
+      answer: "はい、OpenShorts は 100% 無料・オープンソースのクリップジェネレータです。Opus Clip（月 $15-228）や Kapwing（月 $24-79）と違い、透かし・使用制限・サブスクなしで無制限にクリップを生成可能。さらに無料の AI YouTube サムネ／タイトル／説明文生成も内蔵（他ツールでは追加課金される機能）。Docker で自分のマシンにセルフホストし、完全なプライバシーとコントロールを確保できます。"
     },
     {
-      question: "What is the AI UGC Video Generator?",
-      answer: "OpenShorts includes an AI UGC (User Generated Content) video creator that generates marketing videos with AI actors for any product or business. You describe your product or paste a website URL — the AI writes a viral script, generates a realistic AI actor with lip-synced voiceover, adds b-roll visuals, TikTok-style subtitles, and hook text overlays. The result is a ready-to-post vertical video for TikTok, Instagram Reels, or YouTube Shorts. Two cost modes: Low Cost (~$0.65/video using Hailuo + VEED Lipsync) and Premium (~$2/video using Kling Avatar v2)."
+      question: "AI UGC 動画ジェネレータとは？",
+      answer: "OpenShorts は AI UGC（ユーザー生成風コンテンツ）動画クリエイタを内蔵し、あらゆる商品・ビジネス向けに AI アクター付きマーケ動画を生成。商品を説明するか URL を貼るだけで、AI がバズるスクリプトを書き、リップシンク付きの AI アクターを生成、Bロール、TikTok 風字幕、フックを追加。TikTok / Instagram Reels / YouTube Shorts にそのまま投稿できる縦動画が完成。Low Cost（Hailuo + VEED Lipsync で約 $0.65/本）と Premium（Kling Avatar v2 で約 $2/本）の 2 モード。"
     },
     {
-      question: "How much does it cost to generate an AI UGC video?",
-      answer: "OpenShorts itself is free, but the AI Shorts feature uses external APIs (fal.ai for video generation, ElevenLabs for voiceover) that charge per use. Low Cost mode costs approximately $0.65 per video (Flux image $0.05 + ElevenLabs voice $0.10 + Hailuo img2video $0.19 + VEED Lipsync $0.20 + b-roll $0.10). Premium mode costs approximately $2.00 per video using Kling Avatar v2 for higher quality. Both modes are significantly cheaper than hiring UGC creators ($50-500 per video) or using platforms like HeyGen ($24-180/month)."
+      question: "AI UGC 動画 1 本のコストは？",
+      answer: "OpenShorts 自体は無料ですが、AI Shorts 機能は外部 API（動画生成は fal.ai、ナレーションは ElevenLabs）が従量課金です。Low Cost モードは 1 本あたり約 $0.65（Flux 画像 $0.05 + ElevenLabs 音声 $0.10 + Hailuo img2video $0.19 + VEED Lipsync $0.20 + Bロール $0.10）。Premium モードは Kling Avatar v2 で 1 本約 $2.00。UGC クリエイター発注（1 本 $50-500）や HeyGen（月 $24-180）と比べてはるかに安価です。"
     },
     {
-      question: "Can I use the AI UGC Video Generator for any type of business?",
-      answer: "Yes. The AI Shorts generator works for any product, service, or business — not just SaaS. You can use it for restaurants, e-commerce stores, coaching services, local businesses, personal brands, apps, and more. Just describe your business in the text field (e.g. 'Artisan pizza restaurant in Madrid, wood-fired oven, home delivery') or paste your website URL, and the AI generates viral marketing scripts tailored to your business."
+      question: "AI UGC 動画はどんなビジネスでも使えますか？",
+      answer: "はい。AI Shorts ジェネレータは SaaS だけでなく、レストラン、EC、コーチング、ローカルビジネス、個人ブランド、アプリなどあらゆる商品・サービスで使えます。テキスト欄に事業内容を入力するか（例：「マドリードの薪窯職人ピザ、宅配あり」）、ウェブサイトの URL を貼れば、AI がそのビジネス向けにカスタマイズしたバズりマーケスクリプトを生成します。"
     }
   ];
 
   const checkIcon = <Check size={16} className="text-green-400 mx-auto" />;
-  const xIcon = <span className="text-zinc-500 text-sm">Paid</span>;
+  const xIcon = <span className="text-zinc-500 text-sm">有料</span>;
 
   return (
     <div className="min-h-screen bg-background text-white">
-      {/* Navigation */}
+      {/* ナビゲーション */}
       <nav className="fixed top-0 w-full z-50 bg-background/80 backdrop-blur-xl border-b border-white/5">
         <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
@@ -197,9 +197,9 @@ export default function Landing({ onLaunchApp }) {
             <span className="text-lg font-bold">OpenShorts</span>
           </div>
           <div className="hidden md:flex items-center gap-8 text-sm text-zinc-400">
-            <a href="#features" className="hover:text-white transition-colors">Features</a>
-            <a href="#how-it-works" className="hover:text-white transition-colors">How It Works</a>
-            <a href="#comparison" className="hover:text-white transition-colors">Comparison</a>
+            <a href="#features" className="hover:text-white transition-colors">機能</a>
+            <a href="#how-it-works" className="hover:text-white transition-colors">使い方</a>
+            <a href="#comparison" className="hover:text-white transition-colors">比較</a>
             <a href="#faq" className="hover:text-white transition-colors">FAQ</a>
           </div>
           <div className="flex items-center gap-3">
@@ -216,28 +216,28 @@ export default function Landing({ onLaunchApp }) {
               onClick={onLaunchApp}
               className="bg-primary hover:bg-blue-600 text-white px-5 py-2 rounded-xl text-sm font-medium transition-all active:scale-[0.98] shadow-lg shadow-primary/20"
             >
-              Launch App
+              アプリを起動
             </button>
           </div>
         </div>
       </nav>
 
-      {/* Hero Section */}
+      {/* ヒーローセクション */}
       <section className="pt-32 pb-20 px-6">
         <div className="max-w-5xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 bg-primary/10 border border-primary/20 rounded-full px-4 py-1.5 text-sm text-primary mb-8">
             <Sparkles size={14} />
-            <span>Free & Open Source AI Clip Generator + UGC Video Creator</span>
+            <span>無料・オープンソースの AI クリップジェネレータ + UGC 動画クリエイタ</span>
           </div>
 
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold leading-tight mb-6 tracking-tight">
-            Free Open Source
-            <span className="bg-gradient-to-r from-primary via-purple-400 to-pink-500 bg-clip-text text-transparent"> Clip Generator </span>
-            & AI UGC Video Creator
+            無料・オープンソースの
+            <span className="bg-gradient-to-r from-primary via-purple-400 to-pink-500 bg-clip-text text-transparent"> クリップジェネレータ </span>
+            ＆ AI UGC 動画クリエイタ
           </h1>
 
           <p className="hero-description text-lg md:text-xl text-zinc-400 max-w-3xl mx-auto mb-10 leading-relaxed">
-            Three tools in one. <strong className="text-white">Clip Generator:</strong> turn long YouTube videos into viral shorts with AI moment detection, smart 9:16 crop, and auto subtitles. <strong className="text-white">AI Shorts:</strong> generate UGC marketing videos with AI actors and lip-sync for any business. <strong className="text-white">YouTube Studio:</strong> free AI thumbnail generator, 10 viral title suggestions with refinement chat, and auto descriptions with chapters. Self-hosted, open source, no limits.
+            3 つのツールが 1 つに。<strong className="text-white">クリップジェネレータ：</strong>長尺 YouTube を AI 検出・スマート 9:16 クロップ・自動字幕でバズりショートに。<strong className="text-white">AI Shorts：</strong>あらゆるビジネス向けに AI アクター + リップシンクの UGC マーケ動画を生成。<strong className="text-white">YouTube Studio：</strong>無料 AI サムネ、改善チャット付き 10 個のバズりタイトル案、章付き自動説明文。セルフホスト、オープンソース、制限なし。
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12">
@@ -245,7 +245,7 @@ export default function Landing({ onLaunchApp }) {
               onClick={onLaunchApp}
               className="flex items-center gap-2 bg-primary hover:bg-blue-600 text-white px-8 py-3.5 rounded-xl font-medium transition-all active:scale-[0.98] shadow-lg shadow-primary/20 text-lg"
             >
-              Get Started Free
+              無料で始める
               <ArrowRight size={20} />
             </button>
             <a
@@ -255,13 +255,13 @@ export default function Landing({ onLaunchApp }) {
               className="flex items-center gap-2 bg-white/5 border border-white/10 text-white px-8 py-3.5 rounded-xl font-medium transition-all hover:bg-white/10 text-lg"
             >
               <Github size={20} />
-              View on GitHub
+              GitHub で見る
             </a>
           </div>
 
-          {/* Platform Icons */}
+          {/* プラットフォームアイコン */}
           <div className="flex items-center justify-center gap-6 text-zinc-500">
-            <span className="text-sm">Export to:</span>
+            <span className="text-sm">対応エクスポート先：</span>
             <div className="flex items-center gap-4">
               <div className="flex items-center gap-1.5 text-zinc-400">
                 <TikTokIcon size={18} />
@@ -280,43 +280,43 @@ export default function Landing({ onLaunchApp }) {
         </div>
       </section>
 
-      {/* Stats Bar */}
+      {/* 数値バー */}
       <section className="border-y border-white/5 bg-surface/30">
         <div className="max-w-5xl mx-auto px-6 py-10 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
           <div>
             <div className="text-3xl font-bold text-white">100%</div>
-            <div className="text-sm text-zinc-400 mt-1">Free & Open Source</div>
+            <div className="text-sm text-zinc-400 mt-1">無料・オープンソース</div>
           </div>
           <div>
             <div className="text-3xl font-bold text-white">3</div>
-            <div className="text-sm text-zinc-400 mt-1">Tools in One</div>
+            <div className="text-sm text-zinc-400 mt-1">ツール in 1</div>
           </div>
           <div>
             <div className="text-3xl font-bold text-white">30+</div>
-            <div className="text-sm text-zinc-400 mt-1">Dubbing Languages</div>
+            <div className="text-sm text-zinc-400 mt-1">吹き替え対応言語</div>
           </div>
           <div>
             <div className="text-3xl font-bold text-white">$0</div>
-            <div className="text-sm text-zinc-400 mt-1">No Watermarks</div>
+            <div className="text-sm text-zinc-400 mt-1">透かしなし</div>
           </div>
         </div>
       </section>
 
-      {/* 3 Tools in 1 Section */}
+      {/* 3 ツール in 1 セクション */}
       <section className="py-20 px-6">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-14">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">3 Free Tools in 1 Platform</h2>
-            <p className="text-zinc-400 max-w-2xl mx-auto">Everything you need to create, optimize, and publish short-form video content — all free and open source.</p>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">3 つの無料ツールを 1 つのプラットフォームで</h2>
+            <p className="text-zinc-400 max-w-2xl mx-auto">ショート動画の制作・最適化・配信に必要なものすべてが揃います。すべて無料・オープンソース。</p>
           </div>
           <div className="grid md:grid-cols-3 gap-6">
             <div className="bg-surface/50 border border-primary/20 rounded-2xl p-8 relative overflow-hidden">
               <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full -translate-y-1/2 translate-x-1/2" />
               <Scissors size={28} className="text-primary mb-4" />
-              <h3 className="text-xl font-bold text-white mb-2">Clip Generator</h3>
-              <p className="text-zinc-400 text-sm leading-relaxed mb-4">Turn long YouTube videos or local uploads into viral-ready 9:16 shorts. AI detects the best moments, crops to vertical with face tracking, and adds subtitles automatically.</p>
+              <h3 className="text-xl font-bold text-white mb-2">クリップジェネレータ</h3>
+              <p className="text-zinc-400 text-sm leading-relaxed mb-4">長尺 YouTube やローカル動画をバズり用 9:16 ショートに変換。AI が最良の瞬間を検出、顔追従で縦クロップ、字幕も自動付与。</p>
               <ul className="space-y-1.5">
-                {['AI viral moment detection', 'Smart face-tracking crop', 'Auto subtitles + hook overlays', 'AI dubbing in 30+ languages'].map((f, i) => (
+                {['AI バズり瞬間検出', '顔追従スマートクロップ', '自動字幕＋フック', '30+ 言語の AI 吹き替え'].map((f, i) => (
                   <li key={i} className="flex items-center gap-2 text-xs text-zinc-400"><Check size={12} className="text-green-400 shrink-0" />{f}</li>
                 ))}
               </ul>
@@ -325,9 +325,9 @@ export default function Landing({ onLaunchApp }) {
               <div className="absolute top-0 right-0 w-32 h-32 bg-violet-500/5 rounded-full -translate-y-1/2 translate-x-1/2" />
               <Sparkles size={28} className="text-violet-400 mb-4" />
               <h3 className="text-xl font-bold text-white mb-2">AI Shorts</h3>
-              <p className="text-zinc-400 text-sm leading-relaxed mb-4">Generate UGC marketing videos with AI actors for any product or business. No camera, no studio. Just describe your product and get a viral-ready video.</p>
+              <p className="text-zinc-400 text-sm leading-relaxed mb-4">あらゆる商品・ビジネス向けに AI アクター付き UGC マーケ動画を生成。カメラもスタジオも不要。商品を説明するだけでバズり用動画が完成。</p>
               <ul className="space-y-1.5">
-                {['AI actor generation + lip-sync', 'Script writing from URL or description', 'B-roll + TikTok-style subtitles', 'From $0.65 per video'].map((f, i) => (
+                {['AI アクター生成 + リップシンク', 'URL や説明文からスクリプト生成', 'Bロール + TikTok 風字幕', '1 本 $0.65 から'].map((f, i) => (
                   <li key={i} className="flex items-center gap-2 text-xs text-zinc-400"><Check size={12} className="text-green-400 shrink-0" />{f}</li>
                 ))}
               </ul>
@@ -336,9 +336,9 @@ export default function Landing({ onLaunchApp }) {
               <div className="absolute top-0 right-0 w-32 h-32 bg-pink-500/5 rounded-full -translate-y-1/2 translate-x-1/2" />
               <Monitor size={28} className="text-pink-400 mb-4" />
               <h3 className="text-xl font-bold text-white mb-2">YouTube Studio</h3>
-              <p className="text-zinc-400 text-sm leading-relaxed mb-4">Complete free AI YouTube toolkit. Generate thumbnails with your face, get 10 viral title suggestions with refinement chat, and auto-generate descriptions with timestamps.</p>
+              <p className="text-zinc-400 text-sm leading-relaxed mb-4">完全無料の AI YouTube ツールキット。自分の顔写真でサムネ生成、改善チャット付き 10 個のバズりタイトル案、タイムスタンプ付き説明文を自動生成。</p>
               <ul className="space-y-1.5">
-                {['AI thumbnail generator (with face upload)', '10 viral title suggestions + chat', 'Auto descriptions with chapters', 'Direct publish to YouTube'].map((f, i) => (
+                {['AI サムネ生成（顔アップ対応）', 'バズりタイトル 10 案 + チャット', '章付き説明文の自動生成', 'YouTube への直接公開'].map((f, i) => (
                   <li key={i} className="flex items-center gap-2 text-xs text-zinc-400"><Check size={12} className="text-green-400 shrink-0" />{f}</li>
                 ))}
               </ul>
@@ -347,12 +347,12 @@ export default function Landing({ onLaunchApp }) {
         </div>
       </section>
 
-      {/* Features Section */}
+      {/* 機能セクション */}
       <section id="features" className="py-20 px-6">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-14">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Free AI Clip Generator + UGC Video Creator</h2>
-            <p className="text-zinc-400 max-w-2xl mx-auto">Three tools in one: clip long videos into viral shorts, generate UGC marketing videos with AI actors, and a complete YouTube Studio for thumbnails, titles, and descriptions.</p>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">無料 AI クリップジェネレータ + UGC 動画クリエイタ</h2>
+            <p className="text-zinc-400 max-w-2xl mx-auto">3 つのツールが 1 つに：長尺動画をバズりショートに、AI アクターで UGC マーケ動画を生成、サムネ・タイトル・説明文すべて揃う YouTube Studio。</p>
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
             {features.map((feature, i) => (
@@ -362,40 +362,40 @@ export default function Landing({ onLaunchApp }) {
         </div>
       </section>
 
-      {/* API Keys Section */}
+      {/* API キーセクション */}
       <section className="py-20 px-6 bg-surface/20">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-14">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">All APIs Have Free Tiers</h2>
-            <p className="text-zinc-400 max-w-2xl mx-auto">OpenShorts uses three external APIs — all with generous free tiers. Only Gemini is required. Your API keys are encrypted client-side and never stored on the server.</p>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">すべての API に無料枠あり</h2>
+            <p className="text-zinc-400 max-w-2xl mx-auto">OpenShorts は 3 つの外部 API を使用し、すべて寛容な無料枠付き。必須なのは Gemini のみ。API キーはクライアント側で暗号化されサーバには保存されません。</p>
           </div>
           <div className="grid md:grid-cols-3 gap-5">
             <div className="bg-surface/50 border border-white/10 rounded-2xl p-6 relative">
-              <div className="absolute top-4 right-4 bg-primary/20 text-primary text-[10px] font-bold px-2 py-0.5 rounded-full border border-primary/30">REQUIRED</div>
+              <div className="absolute top-4 right-4 bg-primary/20 text-primary text-[10px] font-bold px-2 py-0.5 rounded-full border border-primary/30">必須</div>
               <div className="w-12 h-12 rounded-xl bg-blue-500/10 flex items-center justify-center mb-4">
                 <Cpu size={24} className="text-blue-400" />
               </div>
               <h3 className="text-lg font-semibold text-white mb-1">Google Gemini API</h3>
-              <span className="inline-block text-xs text-green-400 bg-green-500/10 border border-green-500/20 px-2 py-0.5 rounded-full mb-3">Free tier: 1,500 req/day</span>
-              <p className="text-zinc-400 text-sm leading-relaxed">Powers all AI features: viral moment detection, title generation, video effects, YouTube thumbnail creation, and description writing. The core engine of OpenShorts.</p>
+              <span className="inline-block text-xs text-green-400 bg-green-500/10 border border-green-500/20 px-2 py-0.5 rounded-full mb-3">無料枠：1,500 req/日</span>
+              <p className="text-zinc-400 text-sm leading-relaxed">すべての AI 機能を駆動：バズり瞬間検出、タイトル生成、動画エフェクト、YouTube サムネ生成、説明文作成。OpenShorts のコアエンジン。</p>
             </div>
             <div className="bg-surface/50 border border-white/10 rounded-2xl p-6 relative">
-              <div className="absolute top-4 right-4 bg-zinc-700/50 text-zinc-400 text-[10px] font-bold px-2 py-0.5 rounded-full border border-zinc-600/30">OPTIONAL</div>
+              <div className="absolute top-4 right-4 bg-zinc-700/50 text-zinc-400 text-[10px] font-bold px-2 py-0.5 rounded-full border border-zinc-600/30">任意</div>
               <div className="w-12 h-12 rounded-xl bg-purple-500/10 flex items-center justify-center mb-4">
                 <Languages size={24} className="text-purple-400" />
               </div>
               <h3 className="text-lg font-semibold text-white mb-1">ElevenLabs API</h3>
-              <span className="inline-block text-xs text-green-400 bg-green-500/10 border border-green-500/20 px-2 py-0.5 rounded-full mb-3">Free tier included</span>
-              <p className="text-zinc-400 text-sm leading-relaxed">Enables AI voice dubbing and translation in 30+ languages. Preserves the original speaker's voice while translating audio. Dubbed clips are auto-subtitled.</p>
+              <span className="inline-block text-xs text-green-400 bg-green-500/10 border border-green-500/20 px-2 py-0.5 rounded-full mb-3">無料枠あり</span>
+              <p className="text-zinc-400 text-sm leading-relaxed">30+ 言語の AI 音声吹き替え・翻訳を有効化。元話者の声質を保ったまま音声を翻訳。吹き替え後のクリップは字幕も自動生成。</p>
             </div>
             <div className="bg-surface/50 border border-white/10 rounded-2xl p-6 relative">
-              <div className="absolute top-4 right-4 bg-zinc-700/50 text-zinc-400 text-[10px] font-bold px-2 py-0.5 rounded-full border border-zinc-600/30">OPTIONAL</div>
+              <div className="absolute top-4 right-4 bg-zinc-700/50 text-zinc-400 text-[10px] font-bold px-2 py-0.5 rounded-full border border-zinc-600/30">任意</div>
               <div className="w-12 h-12 rounded-xl bg-pink-500/10 flex items-center justify-center mb-4">
                 <Globe size={24} className="text-pink-400" />
               </div>
               <h3 className="text-lg font-semibold text-white mb-1">Upload-Post API</h3>
-              <span className="inline-block text-xs text-green-400 bg-green-500/10 border border-green-500/20 px-2 py-0.5 rounded-full mb-3">Free tier included</span>
-              <p className="text-zinc-400 text-sm leading-relaxed">Enables direct publishing to YouTube, TikTok, and Instagram Reels from the dashboard. <a href="https://www.upload-post.com" target="_blank" rel="noopener noreferrer" className="text-pink-400 hover:text-pink-300 underline">Social media API</a> that lets you post your clips and thumbnails without leaving OpenShorts.</p>
+              <span className="inline-block text-xs text-green-400 bg-green-500/10 border border-green-500/20 px-2 py-0.5 rounded-full mb-3">無料枠あり</span>
+              <p className="text-zinc-400 text-sm leading-relaxed">YouTube / TikTok / Instagram Reels への直接公開を有効化。<a href="https://www.upload-post.com" target="_blank" rel="noopener noreferrer" className="text-pink-400 hover:text-pink-300 underline">ソーシャルメディア API</a> で OpenShorts から離れずに投稿可能。</p>
             </div>
           </div>
           <div className="grid md:grid-cols-2 gap-5 mt-5">
@@ -405,8 +405,8 @@ export default function Landing({ onLaunchApp }) {
                 <Zap size={24} className="text-violet-400" />
               </div>
               <h3 className="text-lg font-semibold text-white mb-1">fal.ai API</h3>
-              <span className="inline-block text-xs text-green-400 bg-green-500/10 border border-green-500/20 px-2 py-0.5 rounded-full mb-3">Pay-per-use from $0.04</span>
-              <p className="text-zinc-400 text-sm leading-relaxed">Powers AI Shorts: generates AI actor images (Flux), talking head videos (Hailuo/Kling), and lip-sync (VEED). Required only for the AI UGC video generator.</p>
+              <span className="inline-block text-xs text-green-400 bg-green-500/10 border border-green-500/20 px-2 py-0.5 rounded-full mb-3">$0.04 から従量課金</span>
+              <p className="text-zinc-400 text-sm leading-relaxed">AI Shorts を駆動：AI アクター画像（Flux）、トーキングヘッド動画（Hailuo / Kling）、リップシンク（VEED）を生成。AI UGC 動画ジェネレータでのみ必要。</p>
             </div>
             <div className="bg-surface/50 border border-white/10 rounded-2xl p-6 relative">
               <div className="absolute top-4 right-4 bg-violet-700/50 text-violet-300 text-[10px] font-bold px-2 py-0.5 rounded-full border border-violet-500/30">AI SHORTS</div>
@@ -414,19 +414,19 @@ export default function Landing({ onLaunchApp }) {
                 <Languages size={24} className="text-violet-400" />
               </div>
               <h3 className="text-lg font-semibold text-white mb-1">ElevenLabs TTS</h3>
-              <span className="inline-block text-xs text-green-400 bg-green-500/10 border border-green-500/20 px-2 py-0.5 rounded-full mb-3">Free tier included</span>
-              <p className="text-zinc-400 text-sm leading-relaxed">Generates natural voiceovers for AI Shorts from the script. Multiple voice options for male and female actors in English and Spanish.</p>
+              <span className="inline-block text-xs text-green-400 bg-green-500/10 border border-green-500/20 px-2 py-0.5 rounded-full mb-3">無料枠あり</span>
+              <p className="text-zinc-400 text-sm leading-relaxed">AI Shorts のスクリプトから自然なナレーションを生成。男声・女声、英語・スペイン語の複数のボイス選択肢。</p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* How It Works Section */}
+      {/* 使い方セクション */}
       <section id="how-it-works" className="py-20 px-6">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-14">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">How It Works</h2>
-            <p className="text-zinc-400 max-w-2xl mx-auto">From a YouTube URL to viral-ready clips in 5 automated steps. The entire pipeline runs on your machine with AI doing the heavy lifting.</p>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">使い方</h2>
+            <p className="text-zinc-400 max-w-2xl mx-auto">YouTube URL からバズり用クリップまで、5 ステップ全自動。すべて自分のマシン上で AI がしっかり処理します。</p>
           </div>
           <div className="space-y-8">
             {steps.map((step, i) => (
@@ -436,24 +436,24 @@ export default function Landing({ onLaunchApp }) {
         </div>
       </section>
 
-      {/* Tech Stack */}
+      {/* 技術スタック */}
       <section className="py-20 px-6">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-14">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Built with Proven Technology</h2>
-            <p className="text-zinc-400 max-w-2xl mx-auto">OpenShorts combines industry-leading AI models and open source tools into a production-ready video processing pipeline.</p>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">実績ある技術で構築</h2>
+            <p className="text-zinc-400 max-w-2xl mx-auto">業界トップの AI モデルとオープンソースを組み合わせた、本番投入可能な動画処理パイプライン。</p>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {[
-              { name: "Google Gemini 3.0", desc: "AI Analysis" },
-              { name: "faster-whisper", desc: "Transcription" },
-              { name: "YOLOv8", desc: "Object Detection" },
-              { name: "MediaPipe", desc: "Face Tracking" },
-              { name: "FFmpeg", desc: "Video Processing" },
-              { name: "ElevenLabs", desc: "Voice & TTS" },
-              { name: "fal.ai", desc: "AI Video Gen" },
-              { name: "React + Vite", desc: "Dashboard" },
-              { name: "Docker", desc: "Deployment" }
+              { name: "Google Gemini 3.0", desc: "AI 解析" },
+              { name: "faster-whisper", desc: "文字起こし" },
+              { name: "YOLOv8", desc: "物体検出" },
+              { name: "MediaPipe", desc: "顔追跡" },
+              { name: "FFmpeg", desc: "動画処理" },
+              { name: "ElevenLabs", desc: "音声 & TTS" },
+              { name: "fal.ai", desc: "AI 動画生成" },
+              { name: "React + Vite", desc: "ダッシュボード" },
+              { name: "Docker", desc: "デプロイ" }
             ].map((tech, i) => (
               <div key={i} className="bg-surface/50 border border-white/10 rounded-xl p-4 text-center">
                 <div className="text-white font-medium text-sm">{tech.name}</div>
@@ -464,18 +464,18 @@ export default function Landing({ onLaunchApp }) {
         </div>
       </section>
 
-      {/* Comparison Table */}
+      {/* 比較表 */}
       <section id="comparison" className="py-20 px-6 bg-surface/20">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-14">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Free Clip Generator vs Paid Alternatives</h2>
-            <p className="text-zinc-400 max-w-2xl mx-auto">Why pay $15-228/month for an AI clip generator when you can self-host the same capabilities for free? OpenShorts includes a free YouTube thumbnail generator, AI title suggestions, and auto descriptions — features that paid tools charge extra for.</p>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">無料クリップジェネレータ vs 有料サービス</h2>
+            <p className="text-zinc-400 max-w-2xl mx-auto">同じ機能をセルフホストで無料で使えるなら、月 $15-228 を払う必要はありません。OpenShorts は無料の YouTube サムネ・タイトル・説明文生成も内蔵（有料ツールでは追加課金される機能）。</p>
           </div>
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead>
                 <tr className="border-b border-white/10">
-                  <th className="py-3 px-4 text-left text-sm text-zinc-400 font-medium">Feature</th>
+                  <th className="py-3 px-4 text-left text-sm text-zinc-400 font-medium">機能</th>
                   <th className="py-3 px-4 text-center text-sm font-medium">
                     <span className="text-primary">OpenShorts</span>
                   </th>
@@ -484,54 +484,54 @@ export default function Landing({ onLaunchApp }) {
                 </tr>
               </thead>
               <tbody>
-                <ComparisonRow feature="Price" openshorts={<span className="text-green-400 font-semibold">$0 Free</span>} opusclip={xIcon} kapwing={xIcon} />
-                <ComparisonRow feature="AI Viral Moment Detection" openshorts={checkIcon} opusclip={checkIcon} kapwing={checkIcon} />
-                <ComparisonRow feature="Smart Vertical Cropping" openshorts={checkIcon} opusclip={checkIcon} kapwing={checkIcon} />
-                <ComparisonRow feature="Auto Subtitles" openshorts={checkIcon} opusclip={checkIcon} kapwing={checkIcon} />
-                <ComparisonRow feature="AI Voice Dubbing (30+ langs)" openshorts={checkIcon} opusclip={<span className="text-zinc-500 text-sm">Limited</span>} kapwing={<span className="text-zinc-500 text-sm">No</span>} />
-                <ComparisonRow feature="AI Video Effects" openshorts={checkIcon} opusclip={<span className="text-zinc-500 text-sm">No</span>} kapwing={checkIcon} />
-                <ComparisonRow feature="Hook Text Overlays" openshorts={checkIcon} opusclip={checkIcon} kapwing={checkIcon} />
-                <ComparisonRow feature="Self-Hosted / Privacy" openshorts={checkIcon} opusclip={<span className="text-zinc-500 text-sm">Cloud only</span>} kapwing={<span className="text-zinc-500 text-sm">Cloud only</span>} />
-                <ComparisonRow feature="No Watermark" openshorts={checkIcon} opusclip={<span className="text-zinc-500 text-sm">Free tier only</span>} kapwing={<span className="text-zinc-500 text-sm">Paid</span>} />
-                <ComparisonRow feature="Open Source" openshorts={checkIcon} opusclip={<span className="text-zinc-500 text-sm">No</span>} kapwing={<span className="text-zinc-500 text-sm">No</span>} />
-                <ComparisonRow feature="AI YouTube Thumbnail Generator" openshorts={checkIcon} opusclip={<span className="text-zinc-500 text-sm">No</span>} kapwing={<span className="text-zinc-500 text-sm">Paid</span>} />
-                <ComparisonRow feature="AI Title & Description Generator" openshorts={checkIcon} opusclip={<span className="text-zinc-500 text-sm">Limited</span>} kapwing={<span className="text-zinc-500 text-sm">Paid</span>} />
-                <ComparisonRow feature="AI UGC Video Generator" openshorts={checkIcon} opusclip={<span className="text-zinc-500 text-sm">No</span>} kapwing={<span className="text-zinc-500 text-sm">No</span>} />
-                <ComparisonRow feature="AI Actors with Lip-Sync" openshorts={checkIcon} opusclip={<span className="text-zinc-500 text-sm">No</span>} kapwing={<span className="text-zinc-500 text-sm">No</span>} />
-                <ComparisonRow feature="Usage Limits" openshorts={<span className="text-green-400 text-sm">Unlimited</span>} opusclip={<span className="text-zinc-500 text-sm">Per plan</span>} kapwing={<span className="text-zinc-500 text-sm">Per plan</span>} />
+                <ComparisonRow feature="価格" openshorts={<span className="text-green-400 font-semibold">$0 無料</span>} opusclip={xIcon} kapwing={xIcon} />
+                <ComparisonRow feature="AI バズり瞬間検出" openshorts={checkIcon} opusclip={checkIcon} kapwing={checkIcon} />
+                <ComparisonRow feature="スマート縦クロップ" openshorts={checkIcon} opusclip={checkIcon} kapwing={checkIcon} />
+                <ComparisonRow feature="自動字幕" openshorts={checkIcon} opusclip={checkIcon} kapwing={checkIcon} />
+                <ComparisonRow feature="AI 音声吹き替え（30+ 言語）" openshorts={checkIcon} opusclip={<span className="text-zinc-500 text-sm">限定的</span>} kapwing={<span className="text-zinc-500 text-sm">なし</span>} />
+                <ComparisonRow feature="AI 動画エフェクト" openshorts={checkIcon} opusclip={<span className="text-zinc-500 text-sm">なし</span>} kapwing={checkIcon} />
+                <ComparisonRow feature="フック（テキストオーバーレイ）" openshorts={checkIcon} opusclip={checkIcon} kapwing={checkIcon} />
+                <ComparisonRow feature="セルフホスト・プライベート" openshorts={checkIcon} opusclip={<span className="text-zinc-500 text-sm">クラウドのみ</span>} kapwing={<span className="text-zinc-500 text-sm">クラウドのみ</span>} />
+                <ComparisonRow feature="透かしなし" openshorts={checkIcon} opusclip={<span className="text-zinc-500 text-sm">無料枠のみ</span>} kapwing={<span className="text-zinc-500 text-sm">有料</span>} />
+                <ComparisonRow feature="オープンソース" openshorts={checkIcon} opusclip={<span className="text-zinc-500 text-sm">なし</span>} kapwing={<span className="text-zinc-500 text-sm">なし</span>} />
+                <ComparisonRow feature="AI YouTube サムネ生成" openshorts={checkIcon} opusclip={<span className="text-zinc-500 text-sm">なし</span>} kapwing={<span className="text-zinc-500 text-sm">有料</span>} />
+                <ComparisonRow feature="AI タイトル & 説明文生成" openshorts={checkIcon} opusclip={<span className="text-zinc-500 text-sm">限定的</span>} kapwing={<span className="text-zinc-500 text-sm">有料</span>} />
+                <ComparisonRow feature="AI UGC 動画ジェネレータ" openshorts={checkIcon} opusclip={<span className="text-zinc-500 text-sm">なし</span>} kapwing={<span className="text-zinc-500 text-sm">なし</span>} />
+                <ComparisonRow feature="AI アクター + リップシンク" openshorts={checkIcon} opusclip={<span className="text-zinc-500 text-sm">なし</span>} kapwing={<span className="text-zinc-500 text-sm">なし</span>} />
+                <ComparisonRow feature="使用制限" openshorts={<span className="text-green-400 text-sm">無制限</span>} opusclip={<span className="text-zinc-500 text-sm">プランごと</span>} kapwing={<span className="text-zinc-500 text-sm">プランごと</span>} />
               </tbody>
             </table>
           </div>
         </div>
       </section>
 
-      {/* Use Cases */}
+      {/* ユースケース */}
       <section className="py-20 px-6">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-14">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Who Uses OpenShorts?</h2>
-            <p className="text-zinc-400 max-w-2xl mx-auto">Content creators, marketers, and agencies use OpenShorts to scale their short-form video production. According to HubSpot's 2025 report, short-form video is the #1 content format with the highest ROI.</p>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">どんな人が使っている？</h2>
+            <p className="text-zinc-400 max-w-2xl mx-auto">クリエイター、マーケター、エージェンシーがショート動画制作のスケールに OpenShorts を活用。HubSpot 2025 レポートでは、ショート動画は ROI が最も高いコンテンツ形式です。</p>
           </div>
           <div className="grid md:grid-cols-3 gap-5">
             {[
               {
-                title: "YouTubers & Content Creators",
-                description: "Repurpose your long YouTube videos into TikTok and Reels clips automatically. According to YouTube's Creator Insider data, channels that post Shorts alongside long-form videos see 20-30% more subscriber growth.",
+                title: "YouTuber & クリエイター",
+                description: "長尺 YouTube を TikTok や Reels 用クリップに自動でリパーパス。YouTube Creator Insider のデータでは、長尺と並行して Shorts を投稿するチャンネルは登録者が 20-30% 多く伸びています。",
                 icon: Youtube
               },
               {
-                title: "Social Media Managers",
-                description: "Scale short-form content production for multiple clients. According to Sprout Social's 2025 Index, 66% of consumers find short-form video the most engaging content type. Process videos in batch and publish directly from one dashboard.",
+                title: "SNS マネージャ",
+                description: "複数クライアント向けにショート動画制作をスケール。Sprout Social の 2025 Index では、消費者の 66% がショート動画を最もエンゲージするコンテンツと回答。バッチ処理して 1 つのダッシュボードから直接公開できます。",
                 icon: Instagram
               },
               {
-                title: "Podcasters & Educators",
-                description: "Extract the most engaging moments from podcast episodes and educational content. Research by Headliner shows that podcast clips on social media increase episode downloads by 72% on average.",
+                title: "ポッドキャスト & 教育者",
+                description: "ポッドキャストや教育コンテンツから最も惹きつける瞬間を抽出。Headliner の調査ではポッドキャストの SNS クリップによりエピソードのダウンロードが平均 72% 増加します。",
                 icon: FileVideo
               },
               {
-                title: "Businesses & Brands",
-                description: "Generate UGC-style marketing videos for any product or business with AI actors. No camera, no studio, no influencer budget. Just describe your product and get a viral-ready video with lip-synced AI avatar, voiceover, b-roll, and subtitles — from $0.65 per video.",
+                title: "ビジネス & ブランド",
+                description: "AI アクターであらゆる商品・ビジネス向けに UGC 風マーケ動画を生成。カメラもスタジオもインフルエンサー予算も不要。商品を説明するだけで、リップシンク AI アバター・ナレーション・Bロール・字幕付きのバズり動画が 1 本 $0.65 から完成。",
                 icon: Sparkles
               }
             ].map((useCase, i) => (
@@ -545,12 +545,12 @@ export default function Landing({ onLaunchApp }) {
         </div>
       </section>
 
-      {/* FAQ Section */}
+      {/* FAQ セクション */}
       <section id="faq" className="py-20 px-6 bg-surface/20">
         <div className="max-w-3xl mx-auto">
           <div className="text-center mb-14">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Frequently Asked Questions</h2>
-            <p className="text-zinc-400">Everything you need to know about OpenShorts, from setup to features.</p>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">よくある質問</h2>
+            <p className="text-zinc-400">セットアップから機能まで、OpenShorts に関する疑問にお答えします。</p>
           </div>
           <div className="space-y-3">
             {faqs.map((faq, i) => (
@@ -566,17 +566,17 @@ export default function Landing({ onLaunchApp }) {
         </div>
       </section>
 
-      {/* CTA Section */}
+      {/* CTA セクション */}
       <section className="py-20 px-6">
         <div className="max-w-3xl mx-auto text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">Start Creating Viral Videos for Free</h2>
-          <p className="text-zinc-400 mb-8 max-w-xl mx-auto">No sign-up, no credit card, no watermarks. Generate viral clips from long videos or create AI UGC marketing videos with AI actors for any business. Self-host with Docker.</p>
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">無料でバズり動画作成を始めよう</h2>
+          <p className="text-zinc-400 mb-8 max-w-xl mx-auto">サインアップ・クレカ・透かしすべて不要。長尺動画からバズりクリップを生成、または AI アクターであらゆるビジネス向けの UGC マーケ動画を作成。Docker でセルフホスト。</p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <button
               onClick={onLaunchApp}
               className="flex items-center gap-2 bg-primary hover:bg-blue-600 text-white px-8 py-3.5 rounded-xl font-medium transition-all active:scale-[0.98] shadow-lg shadow-primary/20 text-lg"
             >
-              Launch OpenShorts
+              OpenShorts を起動
               <ArrowRight size={20} />
             </button>
             <a
@@ -586,22 +586,22 @@ export default function Landing({ onLaunchApp }) {
               className="flex items-center gap-2 text-zinc-400 hover:text-white transition-colors text-sm"
             >
               <Github size={18} />
-              Star on GitHub
+              GitHub でスター
             </a>
           </div>
         </div>
       </section>
 
-      {/* Footer */}
+      {/* フッター */}
       <footer className="border-t border-white/5 py-10 px-6">
         <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-3">
             <img src="/logo-openshorts.png" alt="OpenShorts" className="w-6 h-6" />
-            <span className="text-sm text-zinc-400">OpenShorts — Free Open Source Clip Generator & AI UGC Video Creator</span>
+            <span className="text-sm text-zinc-400">OpenShorts — 無料・オープンソースのクリップジェネレータ & AI UGC 動画クリエイタ</span>
           </div>
           <div className="flex items-center gap-6 text-sm text-zinc-500">
             <a href="https://github.com/mutonby/openshorts" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">GitHub</a>
-            <a href="#features" className="hover:text-white transition-colors">Features</a>
+            <a href="#features" className="hover:text-white transition-colors">機能</a>
             <a href="#faq" className="hover:text-white transition-colors">FAQ</a>
           </div>
         </div>

@@ -1,13 +1,13 @@
 import { z } from "zod";
 
-// --- Word-level caption ---
+// --- 単語単位のキャプション ---
 export interface CaptionWord {
   text: string;
   startMs: number;
   endMs: number;
 }
 
-// --- Subtitle config ---
+// --- 字幕設定 ---
 export type SubtitleAnimation = "none" | "word-highlight" | "pop" | "karaoke";
 export type SubtitlePosition = "top" | "middle" | "bottom";
 
@@ -29,7 +29,7 @@ export interface SubtitleConfig {
   style: SubtitleStyle;
 }
 
-// --- Hook config ---
+// --- フック設定 ---
 export type HookPosition = "top" | "center" | "bottom";
 export type HookSize = "S" | "M" | "L";
 export type HookEntrance = "spring" | "fade" | "slide-up" | "none";
@@ -42,7 +42,7 @@ export interface HookConfig {
   displayDurationSec: number;
 }
 
-// --- Effects config ---
+// --- エフェクト設定 ---
 export interface EffectSegment {
   startSec: number;
   endSec: number;
@@ -58,7 +58,7 @@ export interface EffectsConfig {
   segments: EffectSegment[];
 }
 
-// --- Main composition props ---
+// --- メインコンポジションの Props ---
 export interface ShortVideoProps {
   videoUrl: string;
   durationInFrames: number;
@@ -70,7 +70,7 @@ export interface ShortVideoProps {
   effects: EffectsConfig | null;
 }
 
-// --- Zod schemas for validation (used by render service) ---
+// --- Zod スキーマ（render-service の検証で使用） ---
 export const captionWordSchema = z.object({
   text: z.string(),
   startMs: z.number(),

@@ -50,7 +50,7 @@ const HookBox: React.FC<HookBoxProps> = ({ config, displayFrames }) => {
   const { fps } = useVideoConfig();
   const scale = SIZE_SCALE[config.size] ?? 1.0;
 
-  // Entrance animation
+  // 入場アニメーション
   let animOpacity = 1;
   let animScale = 1;
   let animTranslateY = 0;
@@ -88,7 +88,7 @@ const HookBox: React.FC<HookBoxProps> = ({ config, displayFrames }) => {
       break;
   }
 
-  // Exit fade (last 15 frames)
+  // 退場フェード（最後の 15 フレーム）
   const fadeOutStart = displayFrames - 15;
   if (frame > fadeOutStart) {
     animOpacity *= interpolate(frame, [fadeOutStart, displayFrames], [1, 0], {
@@ -99,7 +99,7 @@ const HookBox: React.FC<HookBoxProps> = ({ config, displayFrames }) => {
 
   const positionStyle = POSITION_STYLE[config.position] ?? POSITION_STYLE.top;
 
-  // Base font size: 5% of 1080 width (matches hooks.py logic)
+  // ベースフォントサイズ: 1080 幅の 5%（hooks.py のロジックと揃える）
   const baseFontSize = 1080 * 0.05;
   const fontSize = Math.round(baseFontSize * scale);
 

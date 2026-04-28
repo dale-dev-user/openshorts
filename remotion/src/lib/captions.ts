@@ -8,8 +8,8 @@ export interface CaptionBlock {
 }
 
 /**
- * Groups word-level captions into display blocks.
- * Same logic as OpenShorts' generate_srt: max chars per block, max duration per block.
+ * 単語単位のキャプションを表示ブロックに束ねる。
+ * OpenShorts の generate_srt と同じロジック（ブロックあたり最大文字数・最大秒数）。
  */
 export function groupCaptionsIntoBlocks(
   captions: CaptionWord[],
@@ -37,7 +37,7 @@ export function groupCaptionsIntoBlocks(
       currentTextLen + word.text.length > maxChars ||
       duration > maxDurationMs
     ) {
-      // Finalize current block
+      // 現在のブロックを確定
       const lastWord = currentWords[currentWords.length - 1];
       blocks.push({
         words: [...currentWords],
@@ -53,7 +53,7 @@ export function groupCaptionsIntoBlocks(
     }
   }
 
-  // Final block
+  // 末尾のブロック
   if (currentWords.length > 0) {
     const lastWord = currentWords[currentWords.length - 1];
     blocks.push({
@@ -68,7 +68,7 @@ export function groupCaptionsIntoBlocks(
 }
 
 /**
- * Find the active word at a given time in milliseconds.
+ * 指定時刻（ミリ秒）にアクティブな単語のインデックスを返す。
  */
 export function getActiveWordIndex(
   words: CaptionWord[],

@@ -11,8 +11,8 @@ import UGCGallery from './components/UGCGallery';
 import ScheduleWeekModal from './components/ScheduleWeekModal';
 import { getApiUrl } from './config';
 
-// Enhanced "Encryption" using XOR + Base64 with a Salt
-// This is better than plain Base64 but still client-side.
+// XOR + Base64 + ソルトによる簡易「暗号化」
+// 平文 Base64 よりはマシ、ただしクライアント側のみ
 const SECRET_KEY = import.meta.env.VITE_ENCRYPTION_KEY || "OpenShorts-Static-Salt-Change-Me";
 const ENCRYPTION_PREFIX = "ENC:";
 
@@ -24,7 +24,7 @@ const encrypt = (text) => {
     ).join('');
     return ENCRYPTION_PREFIX + btoa(xor);
   } catch (e) {
-    console.error("Encryption failed", e);
+    console.error("暗号化に失敗", e);
     return text;
   }
 };
@@ -34,23 +34,23 @@ const decrypt = (text) => {
   if (text.startsWith(ENCRYPTION_PREFIX)) {
     try {
       const raw = text.slice(ENCRYPTION_PREFIX.length);
-      // Check if it's plain base64 or our custom XOR (simple try)
+      // 平文 Base64 か独自 XOR かを判定（簡易トライ）
       const xor = atob(raw);
       const result = xor.split('').map((c, i) =>
         String.fromCharCode(c.charCodeAt(0) ^ SECRET_KEY.charCodeAt(i % SECRET_KEY.length))
       ).join('');
       return result;
     } catch (e) {
-      // Fallback if decryption fails (might be old plain text)
+      // 復号失敗時のフォールバック（古い平文の可能性）
       return '';
     }
   }
-  // Backward compatibility: If no prefix, assume old plain text (or return empty if you want to force re-login)
-  // For migration: Return text as is, so it populates the field, and next save will encrypt it.
+  // 後方互換: プレフィックスが無い場合は古い平文として扱う（再ログイン強制したい場合は空を返す）
+  // マイグレーション用: そのまま返してフィールドに表示、次回保存時に暗号化される。
   return text;
 };
 
-// Simple TikTok icon sine Lucide might not have it or it varies
+// TikTok アイコン（Lucide に無い／差異があるため自前で）
 const TikTokIcon = ({ size = 16, className = "" }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" className={className}>
     <path d="M19.589 6.686a4.793 4.793 0 0 1-3.77-4.245V2h-3.445v13.672a2.896 2.896 0 0 1-5.201 1.743l-.002-.001.002.001a2.895 2.895 0 0 1 3.183-4.51v-3.5a6.329 6.329 0 0 0-5.394 10.692 6.33 6.33 0 0 0 10.857-4.424V8.687a8.182 8.182 0 0 0 4.773 1.526V6.79a4.831 4.831 0 0 1-1.003-.104z" />
@@ -74,7 +74,7 @@ const UserProfileSelector = ({ profiles, selectedUserId, onSelect }) => {
           <div className="w-5 h-5 rounded-full bg-gradient-to-br from-primary to-purple-600 flex items-center justify-center text-[10px] font-bold text-white">
             {selectedProfile?.username?.substring(0, 1).toUpperCase() || "U"}
           </div>
-          <span className="font-medium text-white truncate max-w-[100px]">{selectedProfile?.username || "Select User"}</span>
+          <span className="font-medium text-white truncate max-w-[100px]">{selectedProfile?.username || "ユーザを選択"}</span>
         </span>
         <ChevronDown size={14} className={`text-zinc-500 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
       </button>
@@ -100,7 +100,7 @@ const UserProfileSelector = ({ profiles, selectedUserId, onSelect }) => {
                       {profile.username}
                     </div>
                     <div className="flex gap-2 mt-0.5">
-                      {/* Status indicators */}
+                      {/* 接続状況インジケータ */}
                       <div className={`flex items-center gap-1 text-[10px] ${profile.connected.includes('tiktok') ? 'text-zinc-300' : 'text-zinc-600'}`}>
                         <TikTokIcon size={10} />
                       </div>
@@ -124,31 +124,31 @@ const UserProfileSelector = ({ profiles, selectedUserId, onSelect }) => {
 };
 
 const SESSION_KEY = 'openshorts_session';
-const SESSION_MAX_AGE = 3600000; // 1 hour (matches server job retention)
+const SESSION_MAX_AGE = 3600000; // 1 時間（サーバ側のジョブ保持時間と揃える）
 
-// Mock polling function
+// ジョブ状態のポーリング
 const pollJob = async (jobId) => {
   const res = await fetch(getApiUrl(`/api/status/${jobId}`));
-  if (!res.ok) throw new Error('Status check failed');
+  if (!res.ok) throw new Error('ステータス取得に失敗');
   return res.json();
 };
 
 function App() {
   const [apiKey, setApiKey] = useState(localStorage.getItem('gemini_key') || '');
-  // Social API State - Load encrypted or plain
+  // ソーシャル API ステート - 暗号化済み or 平文を読み込み
   const [uploadPostKey, setUploadPostKey] = useState(() => {
     const stored = localStorage.getItem('uploadPostKey_v3');
     if (stored) return decrypt(stored);
     return '';
   });
-  // ElevenLabs API State - Load encrypted
+  // ElevenLabs API ステート - 暗号化済みを読み込み
   const [elevenLabsKey, setElevenLabsKey] = useState(() => {
     const stored = localStorage.getItem('elevenLabsKey_v1');
     if (stored) return decrypt(stored);
     return '';
   });
 
-  // fal.ai API State - Load encrypted
+  // fal.ai API ステート - 暗号化済みを読み込み
   const [falKey, setFalKey] = useState(() => {
     const stored = localStorage.getItem('falKey_v1');
     if (stored) return decrypt(stored);
@@ -156,20 +156,20 @@ function App() {
   });
 
   const [uploadUserId, setUploadUserId] = useState(() => localStorage.getItem('uploadUserId') || '');
-  const [userProfiles, setUserProfiles] = useState([]); // List of {username, connected: []}
+  const [userProfiles, setUserProfiles] = useState([]); // {username, connected: []} のリスト
   const [showKeyModal, setShowKeyModal] = useState(false);
   const [jobId, setJobId] = useState(null);
-  const [status, setStatus] = useState('idle'); // idle, processing, complete, error
+  const [status, setStatus] = useState('idle'); // idle / processing / complete / error
   const [results, setResults] = useState(null);
   const [logs, setLogs] = useState([]);
   const [logsVisible, setLogsVisible] = useState(true);
   const [processingMedia, setProcessingMedia] = useState(null);
-  const [activeTab, setActiveTab] = useState('dashboard'); // dashboard, settings
+  const [activeTab, setActiveTab] = useState('dashboard'); // dashboard / settings ほか
 
   const [sessionRecovered, setSessionRecovered] = useState(false);
   const [showScheduleWeek, setShowScheduleWeek] = useState(false);
 
-  // Sync state for original video playback
+  // 元動画プレビューの同期再生用ステート
   const [syncedTime, setSyncedTime] = useState(0);
   const [isSyncedPlaying, setIsSyncedPlaying] = useState(false);
   const [syncTrigger, setSyncTrigger] = useState(0);
@@ -184,7 +184,7 @@ function App() {
     setIsSyncedPlaying(false);
   };
 
-  // Session Recovery: Restore on mount
+  // セッション復元: マウント時に復帰
   useEffect(() => {
     try {
       const saved = localStorage.getItem(SESSION_KEY);
@@ -199,7 +199,7 @@ function App() {
         setResults(session.results || null);
         if (session.processingMedia) setProcessingMedia(session.processingMedia);
         if (session.activeTab) setActiveTab(session.activeTab);
-        // If was processing, resume polling; if complete/error, just show results
+        // 処理中だったらポーリング再開、complete/error なら結果を表示するだけ
         setStatus(session.status === 'processing' ? 'processing' : session.status);
         setSessionRecovered(true);
         setTimeout(() => setSessionRecovered(false), 5000);
@@ -209,7 +209,7 @@ function App() {
     }
   }, []);
 
-  // Session Recovery: Save state changes
+  // セッション復元: 状態変更を保存
   useEffect(() => {
     if (status === 'idle') {
       localStorage.removeItem(SESSION_KEY);
@@ -226,13 +226,13 @@ function App() {
       };
       localStorage.setItem(SESSION_KEY, JSON.stringify(sessionData));
     } catch (e) {
-      // localStorage full or serialization error - ignore
+      // localStorage 容量不足やシリアライズ失敗は無視
     }
   }, [jobId, status, results, activeTab]);
 
   useEffect(() => {
-    // Encrypt Gemini Key too for consistency if desired, but user asked specifically about Social integration not saving well.
-    // For now keeping gemini plain for compatibility unless requested.
+    // Gemini キーも揃えて暗号化することは可能だが、ユーザ要望はソーシャル連携保存の改善が中心。
+    // 互換性のため当面 Gemini は平文のまま（要望があれば暗号化）。
     if (apiKey) localStorage.setItem('gemini_key', apiKey);
   }, [apiKey]);
 
@@ -269,9 +269,9 @@ function App() {
       interval = setInterval(async () => {
         try {
           const data = await pollJob(jobId);
-          console.log("Job status:", data);
+          console.log("ジョブ状態:", data);
 
-          // Update results if available (real-time)
+          // 結果が来ていれば反映（リアルタイム）
           if (data.result) {
             setResults(data.result);
           }
@@ -281,15 +281,15 @@ function App() {
             clearInterval(interval);
           } else if (data.status === 'failed') {
             setStatus('error');
-            const errorMsg = data.error || (data.logs && data.logs.length > 0 ? data.logs[data.logs.length - 1] : "Process failed");
-            setLogs(prev => [...prev, "Error: " + errorMsg]);
+            const errorMsg = data.error || (data.logs && data.logs.length > 0 ? data.logs[data.logs.length - 1] : "処理に失敗しました");
+            setLogs(prev => [...prev, "エラー: " + errorMsg]);
             clearInterval(interval);
           } else {
-            // Update logs if available
+            // ログ更新
             if (data.logs) setLogs(data.logs);
           }
         } catch (e) {
-          console.error("Polling error", e);
+          console.error("ポーリングエラー", e);
         }
       }, 2000);
     }
@@ -303,19 +303,19 @@ function App() {
       const res = await fetch(getApiUrl('/api/social/user'), {
         headers: { 'X-Upload-Post-Key': uploadPostKey }
       });
-      if (!res.ok) throw new Error("Failed to fetch");
+      if (!res.ok) throw new Error("取得に失敗しました");
       const data = await res.json();
       if (data.profiles && data.profiles.length > 0) {
         setUserProfiles(data.profiles);
-        // Auto select first if none selected
+        // 未選択なら先頭を自動選択
         if (!uploadUserId) {
           setUploadUserId(data.profiles[0].username);
         }
       } else {
-        alert("No profiles found for this API Key.");
+        alert("この API キーに紐づくプロファイルがありません。");
       }
     } catch (e) {
-      alert("Error fetching User Profiles. Please check key.");
+      alert("ユーザプロファイルの取得に失敗しました。キーを確認してください。");
       console.error(e);
     }
   };
@@ -326,7 +326,7 @@ function App() {
       return;
     }
     setStatus('processing');
-    setLogs(["Starting process..."]);
+    setLogs(["処理を開始しています..."]);
     setResults(null);
     setProcessingMedia(data);
 
@@ -355,7 +355,7 @@ function App() {
 
     } catch (e) {
       setStatus('error');
-      setLogs(l => [...l, `Error starting job: ${e.message}`]);
+      setLogs(l => [...l, `ジョブ開始時のエラー: ${e.message}`]);
     }
   };
 
@@ -368,7 +368,7 @@ function App() {
     localStorage.removeItem(SESSION_KEY);
   };
 
-  // --- UI Components ---
+  // --- UI コンポーネント ---
 
   const Sidebar = () => (
     <div className="w-20 lg:w-64 bg-surface border-r border-white/5 flex flex-col h-full shrink-0 transition-all duration-300">
@@ -385,7 +385,7 @@ function App() {
           className={`w-full flex items-center gap-3 px-3 py-3 rounded-xl transition-colors ${activeTab === 'dashboard' ? 'bg-primary/10 text-primary' : 'text-zinc-400 hover:text-white hover:bg-white/5'}`}
         >
           <LayoutDashboard size={20} />
-          <span className="font-medium hidden lg:block">Clip Generator</span>
+          <span className="font-medium hidden lg:block">クリップ生成</span>
         </button>
 
         <button
@@ -401,7 +401,7 @@ function App() {
           className={`w-full flex items-center gap-3 px-3 py-3 rounded-xl transition-colors ${activeTab === 'ugc-gallery' ? 'bg-violet-500/10 text-violet-400' : 'text-zinc-400 hover:text-white hover:bg-white/5'}`}
         >
           <LayoutGrid size={20} />
-          <span className="font-medium hidden lg:block">UGC Gallery</span>
+          <span className="font-medium hidden lg:block">UGC ギャラリー</span>
         </button>
 
         <button
@@ -425,7 +425,7 @@ function App() {
           className={`w-full flex items-center gap-3 px-3 py-3 rounded-xl transition-colors ${activeTab === 'settings' ? 'bg-primary/10 text-primary' : 'text-zinc-400 hover:text-white hover:bg-white/5'}`}
         >
           <Settings size={20} />
-          <span className="font-medium hidden lg:block">Settings</span>
+          <span className="font-medium hidden lg:block">設定</span>
         </button>
       </nav>
 
@@ -439,8 +439,8 @@ function App() {
             <Globe size={16} />
           </div>
           <div className="hidden lg:block overflow-hidden">
-            <p className="text-sm font-bold text-white leading-none mb-0.5">Landing Page</p>
-            <p className="text-[10px] text-zinc-400 group-hover:text-zinc-300 transition-colors truncate">View website</p>
+            <p className="text-sm font-bold text-white leading-none mb-0.5">ランディング</p>
+            <p className="text-[10px] text-zinc-400 group-hover:text-zinc-300 transition-colors truncate">サイトを見る</p>
           </div>
         </a>
         <a
@@ -453,8 +453,8 @@ function App() {
             <svg height="20" viewBox="0 0 16 16" version="1.1" width="20" aria-hidden="true"><path fillRule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg>
           </div>
           <div className="hidden lg:block overflow-hidden">
-            <p className="text-sm font-bold text-white leading-none mb-0.5">Open Source</p>
-            <p className="text-[10px] text-zinc-400 group-hover:text-zinc-300 transition-colors truncate">Free & Community Driven</p>
+            <p className="text-sm font-bold text-white leading-none mb-0.5">オープンソース</p>
+            <p className="text-[10px] text-zinc-400 group-hover:text-zinc-300 transition-colors truncate">無料 & コミュニティ駆動</p>
           </div>
         </a>
       </div>
@@ -466,12 +466,12 @@ function App() {
       <Sidebar />
 
       <main className="flex-1 flex flex-col h-full overflow-hidden relative">
-        {/* Background Gradients */}
+        {/* 背景グラデーション */}
         <div className="absolute inset-0 overflow-hidden -z-10 pointer-events-none">
           <div className="absolute -top-[10%] -right-[10%] w-[50%] h-[50%] bg-primary/5 rounded-full blur-[120px]" />
         </div>
 
-        {/* Top Header */}
+        {/* トップヘッダー */}
         <header className="h-16 border-b border-white/5 bg-background/50 backdrop-blur-md flex items-center justify-between px-6 shrink-0 z-10">
           <div className="flex items-center gap-4">
             {status !== 'idle' && (
@@ -480,7 +480,7 @@ function App() {
                 className="flex items-center gap-2 text-sm text-zinc-400 hover:text-white transition-colors"
               >
                 <PlusCircle size={16} />
-                <span className="hidden sm:inline">New Project</span>
+                <span className="hidden sm:inline">新規プロジェクト</span>
               </button>
             )}
           </div>
@@ -496,19 +496,19 @@ function App() {
 
             {!apiKey && (
               <span className="text-xs text-amber-500 bg-amber-500/10 px-3 py-1 rounded-full border border-amber-500/20">
-                API Key Missing
+                API キー未設定
               </span>
             )}
           </div>
         </header>
 
-        {/* Session Recovery Banner */}
+        {/* セッション復元バナー */}
         {sessionRecovered && (
           <div className="mx-6 mt-2 p-3 bg-primary/10 border border-primary/20 rounded-xl flex items-center justify-between animate-[fadeIn_0.3s_ease-out] shrink-0">
             <div className="flex items-center gap-2 text-sm text-primary">
               <RotateCcw size={16} />
-              <span className="font-medium">Session recovered</span>
-              <span className="text-zinc-400 text-xs">Your previous work has been restored.</span>
+              <span className="font-medium">セッションを復元しました</span>
+              <span className="text-zinc-400 text-xs">前回の作業を復元しました。</span>
             </div>
             <button onClick={() => setSessionRecovered(false)} className="text-zinc-500 hover:text-white transition-colors">
               <X size={14} />
@@ -516,32 +516,32 @@ function App() {
           </div>
         )}
 
-        {/* Main Workspace */}
+        {/* メインワークスペース */}
         <div className="flex-1 overflow-hidden relative">
 
-          {/* View: Settings */}
+          {/* ビュー: 設定 */}
           {activeTab === 'settings' && (
             <div className="h-full overflow-y-auto p-8 max-w-2xl mx-auto animate-[fadeIn_0.3s_ease-out]">
               <div className="flex items-center justify-between mb-8">
-                <h1 className="text-2xl font-bold">Settings</h1>
+                <h1 className="text-2xl font-bold">設定</h1>
                 <div className="px-3 py-1 bg-green-500/10 border border-green-500/20 rounded-full text-[10px] text-green-400 font-medium flex items-center gap-2">
-                  <Shield size={12} /> Privacy: keys only live in your browser (sent to backend just to process)
+                  <Shield size={12} /> プライバシー: キーはブラウザにのみ保存（処理時のみバックエンドに送信）
                 </div>
               </div>
               <KeyInput onKeySet={setApiKey} savedKey={apiKey} />
 
               <div className="glass-panel p-6 mt-8">
                 <div className="flex items-center justify-between mb-4">
-                  <h2 className="text-lg font-semibold">Social Integration</h2>
-                  <span className="text-[10px] bg-white/5 border border-white/5 px-2 py-0.5 rounded text-zinc-500 uppercase tracking-wider">Optional</span>
+                  <h2 className="text-lg font-semibold">SNS 連携</h2>
+                  <span className="text-[10px] bg-white/5 border border-white/5 px-2 py-0.5 rounded text-zinc-500 uppercase tracking-wider">任意</span>
                 </div>
                 <p className="text-xs text-zinc-500 mb-6 leading-relaxed">
-                  Automatically publish your clips to TikTok, Instagram Reels, and YouTube Shorts via <strong>Upload-Post</strong>.
-                  Includes a <strong>free tier</strong> (no credit card required).
-                  If you prefer, you can skip this and manually download/upload your videos.
+                  <strong>Upload-Post</strong> 経由で TikTok・Instagram Reels・YouTube Shorts へ自動投稿。
+                  <strong>無料枠あり</strong>（クレカ不要）。
+                  使わない場合は手動でダウンロード／アップロードでも構いません。
                 </p>
                 <div className="space-y-4">
-                  <label className="block text-sm text-zinc-400">Upload-Post API Key</label>
+                  <label className="block text-sm text-zinc-400">Upload-Post API キー</label>
                   <div className="flex gap-2">
                     <input
                       type="password"
@@ -551,28 +551,28 @@ function App() {
                       placeholder="ey..."
                     />
                     <button onClick={fetchUserProfiles} className="btn-primary py-2 px-4 text-sm">
-                      Connect
+                      接続
                     </button>
                   </div>
                   <p className="text-xs text-zinc-500 leading-relaxed">
-                    Connect your Upload-Post account to enable one-click publishing.
+                    Upload-Post アカウントを接続するとワンクリックで投稿できます。
                     <div className="mt-3 grid grid-cols-1 sm:grid-cols-3 gap-2">
                       <a href="https://app.upload-post.com/login" target="_blank" rel="noopener noreferrer" className="p-2 border border-white/5 rounded-lg hover:bg-white/5 transition-colors flex flex-col gap-1">
-                        <span className="text-zinc-400 font-medium">1. Login</span>
-                        <span className="text-[10px] text-zinc-600">Register account</span>
+                        <span className="text-zinc-400 font-medium">1. ログイン</span>
+                        <span className="text-[10px] text-zinc-600">アカウント登録</span>
                       </a>
                       <a href="https://app.upload-post.com/manage-users" target="_blank" rel="noopener noreferrer" className="p-2 border border-white/5 rounded-lg hover:bg-white/5 transition-colors flex flex-col gap-1">
-                        <span className="text-zinc-400 font-medium">2. Profiles</span>
-                        <span className="text-[10px] text-zinc-600">Create & Connect</span>
+                        <span className="text-zinc-400 font-medium">2. プロファイル</span>
+                        <span className="text-[10px] text-zinc-600">作成と接続</span>
                       </a>
                       <a href="https://app.upload-post.com/api-keys" target="_blank" rel="noopener noreferrer" className="p-2 border border-white/5 rounded-lg hover:bg-white/5 transition-colors flex flex-col gap-1">
-                        <span className="text-zinc-400 font-medium">3. API Key</span>
-                        <span className="text-[10px] text-zinc-600">Generate key</span>
+                        <span className="text-zinc-400 font-medium">3. API キー</span>
+                        <span className="text-[10px] text-zinc-600">キーを発行</span>
                       </a>
                     </div>
                     <br />
                     <span className="text-zinc-600 italic">
-                      Keys are only stored in your browser. They are sent to the backend only to process your request, never stored server-side.
+                      キーはブラウザにのみ保存されます。リクエスト処理時のみバックエンドに送信され、サーバ側には保存されません。
                     </span>
                   </p>
                 </div>
@@ -580,15 +580,15 @@ function App() {
 
               <div className="glass-panel p-6 mt-8">
                 <div className="flex items-center justify-between mb-4">
-                  <h2 className="text-lg font-semibold">Video Translation</h2>
-                  <span className="text-[10px] bg-white/5 border border-white/5 px-2 py-0.5 rounded text-zinc-500 uppercase tracking-wider">Optional</span>
+                  <h2 className="text-lg font-semibold">動画翻訳</h2>
+                  <span className="text-[10px] bg-white/5 border border-white/5 px-2 py-0.5 rounded text-zinc-500 uppercase tracking-wider">任意</span>
                 </div>
                 <p className="text-xs text-zinc-500 mb-6 leading-relaxed">
-                  Translate your clips to different languages using <strong>ElevenLabs</strong> AI dubbing.
-                  Automatically translates speech while preserving the original voice characteristics.
+                  <strong>ElevenLabs</strong> AI 吹き替えでクリップを多言語化。
+                  元話者の声質を保ったまま音声を翻訳します。
                 </p>
                 <div className="space-y-4">
-                  <label className="block text-sm text-zinc-400">ElevenLabs API Key</label>
+                  <label className="block text-sm text-zinc-400">ElevenLabs API キー</label>
                   <div className="flex gap-2">
                     <input
                       type="password"
@@ -601,29 +601,29 @@ function App() {
                       onClick={() => {
                         if (elevenLabsKey) {
                           localStorage.setItem('elevenLabsKey_v1', encrypt(elevenLabsKey));
-                          alert('ElevenLabs API Key saved!');
+                          alert('ElevenLabs API キーを保存しました');
                         }
                       }}
                       className="btn-primary py-2 px-4 text-sm"
                     >
-                      Save
+                      保存
                     </button>
                   </div>
                   <p className="text-xs text-zinc-500 leading-relaxed">
-                    Get your API key from ElevenLabs to enable video translation.
+                    ElevenLabs から API キーを取得して動画翻訳を有効化してください。
                     <div className="mt-3 grid grid-cols-1 sm:grid-cols-2 gap-2">
                       <a href="https://elevenlabs.io/sign-up" target="_blank" rel="noopener noreferrer" className="p-2 border border-white/5 rounded-lg hover:bg-white/5 transition-colors flex flex-col gap-1">
-                        <span className="text-zinc-400 font-medium">1. Sign Up</span>
-                        <span className="text-[10px] text-zinc-600">Create account</span>
+                        <span className="text-zinc-400 font-medium">1. サインアップ</span>
+                        <span className="text-[10px] text-zinc-600">アカウント作成</span>
                       </a>
                       <a href="https://elevenlabs.io/app/settings/api-keys" target="_blank" rel="noopener noreferrer" className="p-2 border border-white/5 rounded-lg hover:bg-white/5 transition-colors flex flex-col gap-1">
-                        <span className="text-zinc-400 font-medium">2. API Key</span>
-                        <span className="text-[10px] text-zinc-600">Generate key</span>
+                        <span className="text-zinc-400 font-medium">2. API キー</span>
+                        <span className="text-[10px] text-zinc-600">キーを発行</span>
                       </a>
                     </div>
                     <br />
                     <span className="text-zinc-600 italic">
-                      Keys are only stored in your browser. They are sent to the backend only to process your request, never stored server-side.
+                      キーはブラウザにのみ保存されます。リクエスト処理時のみバックエンドに送信され、サーバ側には保存されません。
                     </span>
                   </p>
                 </div>
@@ -631,15 +631,15 @@ function App() {
 
               <div className="glass-panel p-6 mt-8">
                 <div className="flex items-center justify-between mb-4">
-                  <h2 className="text-lg font-semibold">AI Shorts (UGC Videos)</h2>
-                  <span className="text-[10px] bg-violet-500/10 border border-violet-500/20 px-2 py-0.5 rounded text-violet-400 uppercase tracking-wider">New</span>
+                  <h2 className="text-lg font-semibold">AI Shorts（UGC 動画）</h2>
+                  <span className="text-[10px] bg-violet-500/10 border border-violet-500/20 px-2 py-0.5 rounded text-violet-400 uppercase tracking-wider">新機能</span>
                 </div>
                 <p className="text-xs text-zinc-500 mb-6 leading-relaxed">
-                  Generate UGC-style videos with AI actors for any product or business using <strong>fal.ai</strong>.
-                  Just describe your product or paste a URL. Requires fal.ai + ElevenLabs API keys.
+                  <strong>fal.ai</strong> を使ってあらゆる商品・ビジネス向けに AI アクター付き UGC 動画を生成。
+                  商品を説明するか URL を貼るだけ。fal.ai + ElevenLabs の API キーが必要です。
                 </p>
                 <div className="space-y-4">
-                  <label className="block text-sm text-zinc-400">fal.ai API Key</label>
+                  <label className="block text-sm text-zinc-400">fal.ai API キー</label>
                   <div className="flex gap-2">
                     <input
                       type="password"
@@ -652,29 +652,29 @@ function App() {
                       onClick={() => {
                         if (falKey) {
                           localStorage.setItem('falKey_v1', encrypt(falKey));
-                          alert('fal.ai API Key saved!');
+                          alert('fal.ai API キーを保存しました');
                         }
                       }}
                       className="btn-primary py-2 px-4 text-sm"
                     >
-                      Save
+                      保存
                     </button>
                   </div>
                   <p className="text-xs text-zinc-500 leading-relaxed">
-                    Get your API key from fal.ai to enable AI actor video generation.
+                    fal.ai から API キーを取得して AI アクター動画生成を有効化してください。
                     <div className="mt-3 grid grid-cols-1 sm:grid-cols-2 gap-2">
                       <a href="https://fal.ai/dashboard/keys" target="_blank" rel="noopener noreferrer" className="p-2 border border-white/5 rounded-lg hover:bg-white/5 transition-colors flex flex-col gap-1">
-                        <span className="text-zinc-400 font-medium">1. Sign Up</span>
-                        <span className="text-[10px] text-zinc-600">Create fal.ai account</span>
+                        <span className="text-zinc-400 font-medium">1. サインアップ</span>
+                        <span className="text-[10px] text-zinc-600">fal.ai アカウント作成</span>
                       </a>
                       <a href="https://fal.ai/dashboard/keys" target="_blank" rel="noopener noreferrer" className="p-2 border border-white/5 rounded-lg hover:bg-white/5 transition-colors flex flex-col gap-1">
-                        <span className="text-zinc-400 font-medium">2. API Key</span>
-                        <span className="text-[10px] text-zinc-600">Generate key</span>
+                        <span className="text-zinc-400 font-medium">2. API キー</span>
+                        <span className="text-[10px] text-zinc-600">キーを発行</span>
                       </a>
                     </div>
                     <br />
                     <span className="text-zinc-600 italic">
-                      Keys are only stored in your browser. Sent to backend only to process requests.
+                      キーはブラウザにのみ保存されます。リクエスト処理時のみバックエンドに送信されます。
                     </span>
                   </p>
                 </div>
@@ -682,36 +682,36 @@ function App() {
             </div>
           )}
 
-          {/* View: SaaS Shorts */}
+          {/* ビュー: AI Shorts */}
           {activeTab === 'saasshorts' && (
             <SaaShortsTab geminiApiKey={apiKey} elevenLabsKey={elevenLabsKey} falKey={falKey} uploadPostKey={uploadPostKey} uploadUserId={uploadUserId} />
           )}
 
-          {/* View: UGC Gallery */}
+          {/* ビュー: UGC ギャラリー */}
           {activeTab === 'ugc-gallery' && (
             <UGCGallery />
           )}
 
-          {/* View: Thumbnails */}
+          {/* ビュー: サムネイル */}
           {activeTab === 'thumbnails' && (
             <ThumbnailStudio geminiApiKey={apiKey} uploadPostKey={uploadPostKey} uploadUserId={uploadUserId} />
           )}
 
-          {/* View: Gallery */}
+          {/* ビュー: ギャラリー */}
           {/* {activeTab === 'gallery' && (
             <Gallery />
           )} */}
 
-          {/* View: Dashboard (Idle) */}
+          {/* ビュー: ダッシュボード（待機中） */}
           {activeTab === 'dashboard' && status === 'idle' && (
             <div className="h-full flex flex-col items-center justify-center p-6 animate-[fadeIn_0.3s_ease-out]">
               <div className="max-w-xl w-full text-center space-y-8">
                 <div className="space-y-4">
                   <h1 className="text-4xl md:text-5xl font-black bg-gradient-to-b from-white to-white/60 bg-clip-text text-transparent">
-                    Create Viral Shorts
+                    バズるショートを作る
                   </h1>
                   <p className="text-zinc-400 text-lg">
-                    Drop your long-form video URL or file below to instantly generate viral clips with AI.
+                    長尺動画の URL かファイルを下にドロップ。AI が即座にバズり用クリップを生成します。
                   </p>
                 </div>
 
@@ -726,16 +726,16 @@ function App() {
             </div>
           )}
 
-          {/* View: Processing / Results (Split View) */}
+          {/* ビュー: 処理中／結果（分割ビュー） */}
           {activeTab === 'dashboard' && (status === 'processing' || status === 'complete' || status === 'error') && (
             <div className="h-full flex flex-col md:flex-row animate-[fadeIn_0.3s_ease-out]">
 
-              {/* Left Panel: Preview & Status */}
+              {/* 左パネル: プレビューとステータス */}
               <div className={`${status === 'complete' ? 'w-full md:w-[30%] lg:w-[25%]' : 'w-full md:w-[55%] lg:w-[60%]'} h-full flex flex-col border-r border-white/5 bg-black/20 p-6 overflow-y-auto custom-scrollbar transition-all duration-700 ease-in-out`}>
                 <div className="mb-6 flex items-center justify-between">
                   <h2 className="text-lg font-semibold flex items-center gap-2">
                     <Activity className={`text-primary ${status === 'processing' ? 'animate-pulse' : ''}`} size={20} />
-                    Live Analysis
+                    リアルタイム解析
                   </h2>
                   <span className={`text-xs px-2 py-1 rounded-full border ${status === 'processing' ? 'bg-primary/10 border-primary/20 text-primary' :
                     status === 'complete' ? 'bg-green-500/10 border-green-500/20 text-green-400' :
@@ -745,7 +745,7 @@ function App() {
                   </span>
                 </div>
 
-                {/* Video Preview */}
+                {/* 動画プレビュー */}
                 {processingMedia && (
                   <ProcessingAnimation
                     media={processingMedia}
@@ -756,11 +756,11 @@ function App() {
                   />
                 )}
 
-                {/* Logs Terminal */}
+                {/* ログ表示 */}
                 <div className={`bg-[#0c0c0e] rounded-xl border border-white/10 overflow-hidden flex flex-col transition-all duration-500 ${status === 'complete' ? 'h-32 min-h-0 opacity-50 hover:opacity-100' : 'flex-1 min-h-[200px]'}`}>
                   <div className="px-4 py-2 border-b border-white/5 flex items-center justify-between bg-white/5 shrink-0">
                     <span className="text-xs font-mono text-zinc-400 flex items-center gap-2">
-                      <Terminal size={12} /> System Logs
+                      <Terminal size={12} /> システムログ
                     </span>
                     <button onClick={() => setLogsVisible(!logsVisible)} className="text-zinc-500 hover:text-white transition-colors">
                       {logsVisible ? <ChevronDown size={14} /> : <ChevronDown size={14} className="rotate-180" />}
@@ -782,18 +782,18 @@ function App() {
                 </div>
               </div>
 
-              {/* Right Panel: Results Grid */}
+              {/* 右パネル: 結果グリッド */}
               <div className={`${status === 'complete' ? 'w-full md:w-[70%] lg:w-[75%]' : 'w-full md:w-[45%] lg:w-[40%]'} h-full flex flex-col bg-background p-6 transition-all duration-700 ease-in-out`}>
                 <h2 className="text-lg font-semibold mb-6 flex items-center gap-2 shrink-0">
                   <Sparkles className="text-yellow-400" size={20} />
-                  Generated Shorts
+                  生成されたショート
                   {results?.clips?.length > 0 && (
                     <span className="text-xs bg-white/10 text-white px-2 py-0.5 rounded-full ml-auto">
-                      {results.clips.length} Clips
+                      {results.clips.length} クリップ
                     </span>
                   )}
                   {results?.cost_analysis && (
-                    <span className="text-xs bg-green-500/10 border border-green-500/20 text-green-400 px-2 py-0.5 rounded-full ml-2" title={`Input: ${results.cost_analysis.input_tokens} | Output: ${results.cost_analysis.output_tokens}`}>
+                    <span className="text-xs bg-green-500/10 border border-green-500/20 text-green-400 px-2 py-0.5 rounded-full ml-2" title={`入力: ${results.cost_analysis.input_tokens} | 出力: ${results.cost_analysis.output_tokens}`}>
                       ${results.cost_analysis.total_cost.toFixed(5)}
                     </span>
                   )}
@@ -803,7 +803,7 @@ function App() {
                       className="ml-auto flex items-center gap-1.5 px-3 py-1.5 bg-gradient-to-r from-purple-500/20 to-indigo-500/20 hover:from-purple-500/30 hover:to-indigo-500/30 border border-purple-500/30 text-purple-300 hover:text-purple-200 rounded-full text-xs font-bold transition-all"
                     >
                       <Calendar size={14} />
-                      Programar Semana
+                      週次スケジュール
                     </button>
                   )}
                 </h2>
@@ -830,11 +830,11 @@ function App() {
                     status === 'processing' ? (
                       <div className="h-full flex flex-col items-center justify-center text-zinc-500 space-y-4 opacity-50">
                         <div className="w-12 h-12 rounded-full border-2 border-zinc-800 border-t-primary animate-spin" />
-                        <p className="text-sm">Waiting for clips...</p>
+                        <p className="text-sm">クリップを待機中...</p>
                       </div>
                     ) : status === 'error' ? (
                       <div className="h-full flex flex-col items-center justify-center text-red-400 space-y-2">
-                        <p>Generation failed.</p>
+                        <p>生成に失敗しました。</p>
                       </div>
                     ) : null
                   )}
@@ -846,32 +846,32 @@ function App() {
 
         </div>
 
-        {/* Footer */}
+        {/* フッター */}
         <div className="h-8 border-t border-white/5 flex items-center justify-center shrink-0">
           <span className="text-[10px] text-zinc-600">Made with ❤️ by <a href="https://www.upload-post.com" target="_blank" rel="noopener noreferrer" className="text-zinc-500 hover:text-white transition-colors">Upload-Post</a></span>
         </div>
       </main>
 
-      {/* Missing API Key Modal */}
+      {/* API キー未設定モーダル */}
       {showKeyModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm" onClick={() => setShowKeyModal(false)}>
           <div className="bg-[#18181b] border border-white/10 rounded-2xl p-6 max-w-md w-full mx-4 space-y-4 shadow-2xl" onClick={(e) => e.stopPropagation()}>
-            <h2 className="text-lg font-bold text-white">Gemini API Key Required</h2>
+            <h2 className="text-lg font-bold text-white">Gemini API キーが必要です</h2>
             <p className="text-sm text-zinc-400">
-              You need a Google Gemini API key to use the Clip Generator. It's free and takes 30 seconds to get.
+              クリップ生成を使うには Google Gemini API キーが必要です。無料・30 秒で取得できます。
             </p>
             <div className="bg-white/5 border border-white/10 rounded-lg p-4 space-y-2">
-              <p className="text-xs font-semibold text-zinc-300">How to get your free key:</p>
+              <p className="text-xs font-semibold text-zinc-300">無料キーの取得方法:</p>
               <ol className="text-xs text-zinc-400 space-y-1 list-decimal list-inside">
-                <li>Go to <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener noreferrer" className="text-blue-400 underline">aistudio.google.com/app/apikey</a></li>
-                <li>Sign in with your Google account</li>
-                <li>Click "Create API Key"</li>
-                <li>Copy the key and paste it below</li>
+                <li><a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener noreferrer" className="text-blue-400 underline">aistudio.google.com/app/apikey</a> にアクセス</li>
+                <li>Google アカウントでログイン</li>
+                <li>「Create API Key」をクリック</li>
+                <li>キーをコピーして下に貼り付け</li>
               </ol>
             </div>
             <input
               type="text"
-              placeholder="Paste your Gemini API key here..."
+              placeholder="Gemini API キーをここに貼り付け..."
               className="w-full bg-black/50 border border-white/20 rounded-lg px-4 py-2.5 text-sm text-white placeholder-zinc-600 focus:outline-none focus:border-blue-500"
               onKeyDown={(e) => {
                 if (e.key === 'Enter' && e.target.value.trim()) {
@@ -881,17 +881,17 @@ function App() {
               }}
             />
 
-            {/* Upload-Post info */}
+            {/* Upload-Post 案内 */}
             <div className="bg-violet-500/5 border border-violet-500/20 rounded-lg p-4 space-y-2">
-              <p className="text-xs font-semibold text-violet-300">Optional: Auto-publish to social media</p>
+              <p className="text-xs font-semibold text-violet-300">任意: SNS への自動投稿</p>
               <p className="text-xs text-zinc-400">
-                With an <strong className="text-zinc-300">Upload-Post</strong> API key you can publish your clips directly to TikTok, Instagram Reels, and YouTube Shorts — or schedule them for later. Free tier available, no credit card needed.
+                <strong className="text-zinc-300">Upload-Post</strong> の API キーがあれば TikTok・Instagram Reels・YouTube Shorts へ直接投稿、または後で投稿する予約も可能です。無料枠あり、クレカ不要。
               </p>
               <ol className="text-xs text-zinc-400 space-y-1 list-decimal list-inside">
-                <li>Register at <a href="https://app.upload-post.com/login" target="_blank" rel="noopener noreferrer" className="text-violet-400 underline">app.upload-post.com</a></li>
-                <li>Connect your TikTok, Instagram, or YouTube accounts</li>
-                <li>Go to API Keys and generate one</li>
-                <li>Paste it in Settings — done!</li>
+                <li><a href="https://app.upload-post.com/login" target="_blank" rel="noopener noreferrer" className="text-violet-400 underline">app.upload-post.com</a> で登録</li>
+                <li>TikTok / Instagram / YouTube アカウントを接続</li>
+                <li>API Keys から発行</li>
+                <li>設定画面に貼り付けて完了</li>
               </ol>
             </div>
 
@@ -900,13 +900,13 @@ function App() {
                 onClick={() => setShowKeyModal(false)}
                 className="flex-1 text-sm text-zinc-400 py-2 rounded-lg border border-white/10 hover:bg-white/5 transition-colors"
               >
-                Cancel
+                キャンセル
               </button>
               <button
                 onClick={() => { setShowKeyModal(false); setActiveTab('settings'); }}
                 className="flex-1 text-sm text-white py-2 rounded-lg bg-blue-600 hover:bg-blue-500 transition-colors font-medium"
               >
-                Go to Settings
+                設定へ
               </button>
             </div>
           </div>

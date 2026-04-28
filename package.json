@@ -1,0 +1,14 @@
+{
+  "name": "openshorts-root",
+  "private": true,
+  "scripts": {
+    "install:all": "npm install --prefix dashboard && npm install --prefix remotion && npm install --prefix render-service",
+    "dev": "concurrently -n dashboard,remotion,render -c blue,magenta,green \"npm run dev --prefix dashboard\" \"npm run studio --prefix remotion\" \"npm run dev --prefix render-service\"",
+    "dev:dashboard": "npm run dev --prefix dashboard",
+    "dev:remotion": "npm run studio --prefix remotion",
+    "dev:render": "npm run dev --prefix render-service"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.0"
+  }
+}

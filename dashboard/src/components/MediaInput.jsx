@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Youtube, Upload, FileVideo, X } from 'lucide-react';
 
 export default function MediaInput({ onProcess, isProcessing }) {
-    const [mode, setMode] = useState('url'); // 'url' | 'file'
+    const [mode, setMode] = useState('url'); // 'url' | 'file' のいずれか
     const [url, setUrl] = useState('');
     const [file, setFile] = useState(null);
 
@@ -44,7 +44,7 @@ export default function MediaInput({ onProcess, isProcessing }) {
                         }`}
                 >
                     <Upload size={18} />
-                    Upload File
+                    ファイルをアップロード
                 </button>
             </div>
 
@@ -88,8 +88,8 @@ export default function MediaInput({ onProcess, isProcessing }) {
                                     className="hidden"
                                 />
                                 <Upload className="mx-auto mb-3 text-zinc-500" size={24} />
-                                <p className="text-zinc-400">Click to upload or drag and drop</p>
-                                <p className="text-xs text-zinc-600 mt-1">MP4, MOV up to 500MB</p>
+                                <p className="text-zinc-400">クリックでアップロード、もしくはドラッグ&ドロップ</p>
+                                <p className="text-xs text-zinc-600 mt-1">MP4・MOV、500MB まで</p>
                             </label>
                         )}
                     </div>
@@ -103,11 +103,11 @@ export default function MediaInput({ onProcess, isProcessing }) {
                     {isProcessing ? (
                         <>
                             <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                            Processing Video...
+                            動画を処理中...
                         </>
                     ) : (
                         <>
-                            Generate Clips
+                            クリップを生成
                         </>
                     )}
                 </button>

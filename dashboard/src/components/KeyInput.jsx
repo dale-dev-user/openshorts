@@ -23,7 +23,7 @@ export default function KeyInput({ onKeySet, savedKey }) {
                 <div className="p-2 bg-accent/20 rounded-lg text-accent">
                     <Key size={20} />
                 </div>
-                <h2 className="text-lg font-semibold">Gemini API Key</h2>
+                <h2 className="text-lg font-semibold">Gemini API キー</h2>
             </div>
 
             <div className="flex gap-3">
@@ -53,11 +53,11 @@ export default function KeyInput({ onKeySet, savedKey }) {
                         : 'bg-primary hover:bg-blue-600 text-white shadow-lg shadow-primary/20'
                         }`}
                 >
-                    {isSaved ? <><Check size={18} /> Ready</> : 'Set Key'}
+                    {isSaved ? <><Check size={18} /> 設定済み</> : 'キーを設定'}
                 </button>
             </div>
             <p className="mt-3 text-xs text-zinc-500">
-                Your key is stored locally in your browser for convenience.
+                利便性のため、キーはブラウザのローカルにのみ保存されます。
                 <br />
                 <a
                     href="https://aistudio.google.com/app/apikey"
@@ -65,7 +65,7 @@ export default function KeyInput({ onKeySet, savedKey }) {
                     rel="noopener noreferrer"
                     className="text-primary hover:underline mt-1 inline-block"
                 >
-                    Get your free Gemini API Key here →
+                    無料の Gemini API キーはこちらから →
                 </a>
             </p>
         </div>

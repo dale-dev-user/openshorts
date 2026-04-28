@@ -8,8 +8,8 @@ interface VideoEffectsProps {
 }
 
 /**
- * Wraps children (typically <OffthreadVideo>) with dynamic CSS transforms and filters.
- * Interpolates smoothly between effect segments.
+ * 子要素（通常は <OffthreadVideo>）を CSS の transform/filter で動的にラップする。
+ * 各エフェクトセグメント間を滑らかに補間する。
  */
 export const VideoEffects: React.FC<VideoEffectsProps> = ({
   config,
@@ -71,7 +71,7 @@ function getInterpolatedValues(
   frame: number,
   fps: number
 ): InterpolatedValues {
-  // Default values (no effect)
+  // デフォルト値（エフェクトなし）
   const defaults: InterpolatedValues = {
     zoom: 1,
     centerX: 0.5,
@@ -81,28 +81,28 @@ function getInterpolatedValues(
     saturate: 1,
   };
 
-  // Find active segment
+  // 現在アクティブなセグメントを探す
   const active = segments.find(
     (s) => timeSec >= s.startSec && timeSec < s.endSec
   );
 
   if (!active) {
-    // Check if we're transitioning between segments (smooth fade)
+    // セグメント間を遷移中か判定（滑らかなフェード）
     const prev = segments.filter((s) => s.endSec <= timeSec).pop();
     const next = segments.find((s) => s.startSec > timeSec);
 
     if (prev && next) {
       const gap = next.startSec - prev.endSec;
       if (gap < 1.0) {
-        // Short gap: interpolate between prev and next
+        // 隙間が短い場合は prev → next を直接補間
         const progress = (timeSec - prev.endSec) / gap;
         return lerpSegments(prev, next, progress);
       }
     }
 
-    // Transition out from previous segment
+    // 直前セグメントからのフェードアウト
     if (prev) {
-      const fadeOutDuration = 0.3; // seconds
+      const fadeOutDuration = 0.3; // 秒
       const elapsed = timeSec - prev.endSec;
       if (elapsed < fadeOutDuration) {
         const progress = elapsed / fadeOutDuration;
@@ -110,7 +110,7 @@ function getInterpolatedValues(
       }
     }
 
-    // Transition into next segment
+    // 次セグメントへのフェードイン
     if (next) {
       const fadeInDuration = 0.3;
       const remaining = next.startSec - timeSec;
@@ -123,7 +123,7 @@ function getInterpolatedValues(
     return defaults;
   }
 
-  // Inside active segment: smooth entrance/exit at edges
+  // アクティブセグメント内部：両端でなめらかに入退場
   const segDuration = active.endSec - active.startSec;
   const transitionSec = Math.min(0.3, segDuration * 0.15);
 
@@ -131,7 +131,7 @@ function getInterpolatedValues(
   const endFrame = Math.round(active.endSec * fps);
   const transitionFrames = Math.round(transitionSec * fps);
 
-  // Entrance ease
+  // 入場イージング
   const entranceFactor = interpolate(
     frame,
     [startFrame, startFrame + transitionFrames],
@@ -139,7 +139,7 @@ function getInterpolatedValues(
     { extrapolateLeft: "clamp", extrapolateRight: "clamp" }
   );
 
-  // Exit ease
+  // 退場イージング
   const exitFactor = interpolate(
     frame,
     [endFrame - transitionFrames, endFrame],

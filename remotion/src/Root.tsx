@@ -6,25 +6,22 @@ import { shortVideoPropsSchema } from "./lib/types";
 
 const DEFAULT_PROPS: ShortVideoProps = {
   videoUrl: "",
-  durationInFrames: 900, // 30s at 30fps
+  durationInFrames: 900, // 30fps で 30 秒
   fps: 30,
   width: 1080,
   height: 1920,
   subtitles: {
     captions: [
-      { text: "This", startMs: 0, endMs: 400 },
-      { text: "is", startMs: 400, endMs: 600 },
-      { text: "a", startMs: 600, endMs: 750 },
-      { text: "demo", startMs: 750, endMs: 1200 },
-      { text: "of", startMs: 1200, endMs: 1400 },
-      { text: "animated", startMs: 1400, endMs: 2000 },
-      { text: "subtitles", startMs: 2000, endMs: 2800 },
-      { text: "in", startMs: 2800, endMs: 3000 },
-      { text: "Remotion", startMs: 3000, endMs: 3800 },
-      { text: "with", startMs: 4000, endMs: 4300 },
-      { text: "word", startMs: 4300, endMs: 4700 },
-      { text: "level", startMs: 4700, endMs: 5100 },
-      { text: "highlighting", startMs: 5100, endMs: 6000 },
+      { text: "これは", startMs: 0, endMs: 600 },
+      { text: "Remotion", startMs: 600, endMs: 1400 },
+      { text: "の", startMs: 1400, endMs: 1600 },
+      { text: "アニメーション", startMs: 1600, endMs: 2600 },
+      { text: "字幕", startMs: 2600, endMs: 3200 },
+      { text: "デモ", startMs: 3200, endMs: 3800 },
+      { text: "です", startMs: 3800, endMs: 4400 },
+      { text: "単語", startMs: 4500, endMs: 5000 },
+      { text: "ごとに", startMs: 5000, endMs: 5500 },
+      { text: "ハイライト", startMs: 5500, endMs: 6000 },
     ],
     position: "bottom",
     style: {
@@ -40,7 +37,7 @@ const DEFAULT_PROPS: ShortVideoProps = {
     },
   },
   hook: {
-    text: "POV: You just discovered OpenShorts",
+    text: "POV: OpenShorts を見つけてしまった",
     position: "top",
     size: "M",
     entranceAnimation: "spring",

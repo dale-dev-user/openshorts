@@ -7,26 +7,28 @@ import { HookOverlay } from "./HookOverlay";
 import { VideoEffects } from "./VideoEffects";
 
 /**
- * Main composition that layers all post-processing on top of the base video.
- * Uses @remotion/media Video for browser-side rendering compatibility.
+ * ベース動画の上に各種ポストプロセス（エフェクト・字幕・フック）を重ねるメインコンポジション。
+ * ブラウザ側レンダリング互換のため @remotion/media の Video を使用。
  */
 export const ShortVideo: React.FC<Record<string, unknown>> = (rawProps) => {
   const { videoUrl, subtitles, hook, effects } =
     rawProps as unknown as ShortVideoProps;
   return (
     <AbsoluteFill style={{ backgroundColor: "#000" }}>
-      {/* Layer 1: Base video with optional zoom/color effects */}
-      <VideoEffects config={effects}>
-        <Video
-          src={videoUrl}
-          style={{ width: "100%", height: "100%", objectFit: "cover" }}
-        />
-      </VideoEffects>
+      {/* レイヤー1: ベース動画（ズーム/色味エフェクトを任意で適用） */}
+      {videoUrl && (
+        <VideoEffects config={effects}>
+          <Video
+            src={videoUrl}
+            style={{ width: "100%", height: "100%", objectFit: "cover" }}
+          />
+        </VideoEffects>
+      )}
 
-      {/* Layer 2: Animated subtitles */}
+      {/* レイヤー2: アニメーション字幕 */}
       {subtitles && <Subtitles config={subtitles} />}
 
-      {/* Layer 3: Hook text overlay */}
+      {/* レイヤー3: フック（テキストオーバーレイ） */}
       {hook && <HookOverlay config={hook} />}
     </AbsoluteFill>
   );
